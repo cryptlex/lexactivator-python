@@ -3,12 +3,14 @@ import os, sys
 import ctypes
 import ctypes.util
 
+
 def UNCHECKED(type):
     if (hasattr(type, "_type_") and isinstance(type._type_, str)
-        and type._type_ != "P"):
+            and type._type_ != "P"):
         return type
     else:
         return c_void_p
+
 
 def get_library_path():
     if sys.platform == 'darwin':
@@ -20,6 +22,7 @@ def get_library_path():
     else:
         raise TypeError("Platform not supported!")
 
+
 def load_library(path):
     if sys.platform == 'darwin':
         return ctypes.CDLL(path, ctypes.RTLD_GLOBAL)
@@ -30,20 +33,23 @@ def load_library(path):
     else:
         raise TypeError("Platform not supported!")
 
+
 library = load_library(get_library_path())
 
 # define types
 CSTRTYPE = c_char_p
 STRTYPE = c_char_p
-CallbackType = CFUNCTYPE(UNCHECKED(None), c_uint32) # /Users/adnan/Downloads/ctypesgen-master/LexActivator.h: 60
+CallbackType = CFUNCTYPE(UNCHECKED(None), c_uint32)
+
 
 class PermissionFlags:
     LA_USER = 1
     LA_SYSTEM = 2
 
+
 SetProductFile = library.SetProductFile
 SetProductFile.argtypes = [CSTRTYPE]
-SetProductFile.restype = c_int 
+SetProductFile.restype = c_int
 
 SetProductData = library.SetProductData
 SetProductData.argtypes = [CSTRTYPE]
@@ -136,7 +142,6 @@ GenerateOfflineActivationRequest.restype = c_int
 DeactivateLicense = library.DeactivateLicense
 DeactivateLicense.argtypes = []
 DeactivateLicense.restype = c_int
-
 
 GenerateOfflineDeactivationRequest = library.GenerateOfflineDeactivationRequest
 GenerateOfflineDeactivationRequest.argtypes = [CSTRTYPE]
