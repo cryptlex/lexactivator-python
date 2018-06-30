@@ -39,6 +39,10 @@ library = load_library(get_library_path())
 # define types
 CSTRTYPE = c_char_p
 STRTYPE = c_char_p
+if sys.platform == 'win32':
+    CSTRTYPE = c_wchar_p
+    STRTYPE = c_wchar_p
+
 CallbackType = CFUNCTYPE(UNCHECKED(None), c_uint32)
 
 
