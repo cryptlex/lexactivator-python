@@ -13,6 +13,7 @@ def UNCHECKED(type):
 
 
 def get_library_path():
+    # Get the working directory of this file
     filename = inspect.getframeinfo(inspect.currentframe()).filename
     dir_path = os.path.dirname(os.path.abspath(filename))
     if sys.platform == 'darwin':
