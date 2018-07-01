@@ -1,5 +1,5 @@
 from ctypes import *
-import os, sys
+import os, sys, inspect
 import ctypes
 import ctypes.util
 
@@ -13,12 +13,14 @@ def UNCHECKED(type):
 
 
 def get_library_path():
+    filename = inspect.getframeinfo(inspect.currentframe()).filename
+    dir_path = os.path.dirname(os.path.abspath(filename))
     if sys.platform == 'darwin':
-        return "libLexActivator.dylib"
+        return os.path.join(dir_path, "libLexActivator.dylib")
     elif sys.platform == 'linux':
-        return "libLexActivator.so"
+        return os.path.join(dir_path, "libLexActivator.so")
     elif sys.platform == 'win32':
-        return "LexActivator.dll"
+        return os.path.join(dir_path, "LexActivator.dll")
     else:
         raise TypeError("Platform not supported!")
 
@@ -33,15 +35,17 @@ def load_library(path):
     else:
         raise TypeError("Platform not supported!")
 
+def get_char_type():
+    if sys.platform == 'win32':
+        return c_wchar_p
+    else:
+        return c_char_p
 
 library = load_library(get_library_path())
 
 # define types
-CSTRTYPE = c_char_p
-STRTYPE = c_char_p
-if sys.platform == 'win32':
-    CSTRTYPE = c_wchar_p
-    STRTYPE = c_wchar_p
+CSTRTYPE = get_char_type()
+STRTYPE = get_char_type()
 
 CallbackType = CFUNCTYPE(UNCHECKED(None), c_uint32)
 
