@@ -116,6 +116,10 @@ GetLicenseUserName = library.GetLicenseUserName
 GetLicenseUserName.argtypes = [STRTYPE, c_uint32]
 GetLicenseUserName.restype = c_int
 
+GetLicenseType = library.GetLicenseType
+GetLicenseType.argtypes = [STRTYPE, c_uint32]
+GetLicenseType.restype = c_int
+
 GetActivationMetadata = library.GetActivationMetadata
 GetActivationMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetActivationMetadata.restype = c_int
