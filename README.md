@@ -1,5 +1,5 @@
 # lexactivator-python
-LexActivator API wrapper for Python
+LexActivator - Python licensing library
 
 Refer to following for documentation:
 
