@@ -172,6 +172,14 @@ ActivateTrial = library.ActivateTrial
 ActivateTrial.argtypes = []
 ActivateTrial.restype = c_int
 
+ActivateTrialOffline = library.ActivateTrialOffline
+ActivateTrialOffline.argtypes = [CSTRTYPE]
+ActivateTrialOffline.restype = c_int
+
+GenerateOfflineTrialActivationRequest = library.GenerateOfflineTrialActivationRequest
+GenerateOfflineTrialActivationRequest.argtypes = [CSTRTYPE]
+GenerateOfflineTrialActivationRequest.restype = c_int
+
 IsTrialGenuine = library.IsTrialGenuine
 IsTrialGenuine.argtypes = []
 IsTrialGenuine.restype = c_int
