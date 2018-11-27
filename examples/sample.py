@@ -25,6 +25,12 @@ def init():
         sys.exit(status)
     return
 
+# License callback is invoked when IsLicenseGenuine() completes a server sync
+def licence_callback(status):
+    print("License status: ", status)
+
+# reference the callback to keep it alive
+licence_callback_fn = LexActivator.CallbackType(licence_callback)
 
 def activate():
     status = LexActivator.SetLicenseKey("PASTE_LICENCE_KEY")
@@ -63,6 +69,8 @@ def activateTrial():
 
 def main():
     init()
+    # Setting license callback is recommended for floating licenses
+	# LexActivator.SetLicenseCallback(licence_callback_fn);
     status = LexActivator.IsLicenseGenuine()
     if LexActivator.StatusCodes.LA_OK == status:
         expiryDate = ctypes.c_uint()
