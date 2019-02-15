@@ -92,6 +92,10 @@ SetNetworkProxy = library.SetNetworkProxy
 SetNetworkProxy.argtypes = [CSTRTYPE]
 SetNetworkProxy.restype = c_int
 
+SetCryptlexHost = library.SetCryptlexHost
+SetCryptlexHost.argtypes = [CSTRTYPE]
+SetCryptlexHost.restype = c_int
+
 GetProductMetadata = library.GetProductMetadata
 GetProductMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetProductMetadata.restype = c_int
