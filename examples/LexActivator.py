@@ -36,11 +36,13 @@ def load_library(path):
     else:
         raise TypeError("Platform not supported!")
 
+
 def get_char_type():
     if sys.platform == 'win32':
         return c_wchar_p
     else:
         return c_char_p
+
 
 library = load_library(get_library_path())
 
@@ -121,6 +123,14 @@ GetLicenseUserName = library.GetLicenseUserName
 GetLicenseUserName.argtypes = [STRTYPE, c_uint32]
 GetLicenseUserName.restype = c_int
 
+GetLicenseUserCompany = library.GetLicenseUserCompany
+GetLicenseUserCompany.argtypes = [STRTYPE, c_uint32]
+GetLicenseUserCompany.restype = c_int
+
+GetLicenseUserMetadata = library.GetLicenseUserMetadata
+GetLicenseUserMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
+GetLicenseUserMetadata.restype = c_int
+
 GetLicenseType = library.GetLicenseType
 GetLicenseType.argtypes = [STRTYPE, c_uint32]
 GetLicenseType.restype = c_int
@@ -128,6 +138,10 @@ GetLicenseType.restype = c_int
 GetActivationMetadata = library.GetActivationMetadata
 GetActivationMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetActivationMetadata.restype = c_int
+
+GetServerSyncGracePeriodExpiryDate = library.GetServerSyncGracePeriodExpiryDate
+GetServerSyncGracePeriodExpiryDate.argtypes = [POINTER(c_uint32)]
+GetServerSyncGracePeriodExpiryDate.restype = c_int
 
 GetTrialActivationMetadata = library.GetTrialActivationMetadata
 GetTrialActivationMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
@@ -144,6 +158,10 @@ GetTrialId.restype = c_int
 GetLocalTrialExpiryDate = library.GetLocalTrialExpiryDate
 GetLocalTrialExpiryDate.argtypes = [POINTER(c_uint32)]
 GetLocalTrialExpiryDate.restype = c_int
+
+CheckForReleaseUpdate = library.CheckForReleaseUpdate
+CheckForReleaseUpdate.argtypes = [CSTRTYPE, CSTRTYPE, CSTRTYPE, CallbackType]
+CheckForReleaseUpdate.restype = c_int
 
 ActivateLicense = library.ActivateLicense
 ActivateLicense.argtypes = []
@@ -221,6 +239,10 @@ class StatusCodes:
 
     LA_LOCAL_TRIAL_EXPIRED = 26
 
+    LA_RELEASE_UPDATE_AVAILABLE = 30
+
+    LA_RELEASE_NO_UPDATE_AVAILABLE = 31
+
     LA_E_FILE_PATH = 40
 
     LA_E_PRODUCT_FILE = 41
@@ -278,8 +300,10 @@ class StatusCodes:
     LA_E_TRIAL_ACTIVATION_METADATA_LIMIT = 67
 
     LA_E_METADATA_KEY_NOT_FOUND = 68
-    
+
     LA_E_TIME_MODIFIED = 69
+
+    LA_E_RELEASE_VERSION_FORMAT = 70
 
     LA_E_VM = 80
 
