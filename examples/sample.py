@@ -39,6 +39,12 @@ def software_release_update_callback(status):
 # reference the callback to keep it alive
 software_release_update_callback_fn = LexActivator.CallbackType(software_release_update_callback)
 
+def get_string_buffer(size):
+    if sys.platform == 'win32':
+        return ctypes.create_unicode_buffer(size)
+    else:
+        return ctypes.create_string_buffer(size)
+
 def activate():
     status = LexActivator.SetLicenseKey("PASTE_LICENCE_KEY")
     if LexActivator.StatusCodes.LA_OK != status:
@@ -85,7 +91,7 @@ def main():
         daysLeft = (expiryDate.value - time.time()) / 86500
         print("Days left: ", daysLeft)
         bufferSize = 256
-        name = ctypes.create_string_buffer(bufferSize)
+        name = get_string_buffer(bufferSize)
         LexActivator.GetLicenseUserName(name, bufferSize)
         print("License user: ", name.value)
         print("License is genuinely activated!")
