@@ -32,6 +32,13 @@ def licence_callback(status):
 # reference the callback to keep it alive
 licence_callback_fn = LexActivator.CallbackType(licence_callback)
 
+# Software release update callback is invoked when CheckForReleaseUpdate() gets a response from the server
+def software_release_update_callback(status):
+    print("Release status: ", status)
+
+# reference the callback to keep it alive
+software_release_update_callback_fn = LexActivator.CallbackType(software_release_update_callback)
+
 def activate():
     status = LexActivator.SetLicenseKey("PASTE_LICENCE_KEY")
     if LexActivator.StatusCodes.LA_OK != status:
@@ -82,6 +89,11 @@ def main():
         LexActivator.GetLicenseUserName(name, bufferSize)
         print("License user: ", name.value)
         print("License is genuinely activated!")
+
+        print("Checking for software release update...")
+        status = LexActivator.CheckForReleaseUpdate("windows", "1.0.0", "stable", software_release_update_callback_fn)
+        if LexActivator.StatusCodes.LA_OK != status:
+            print("Error checking for software release update:", status)
     elif LexActivator.StatusCodes.LA_EXPIRED == status:
         print("License is genuinely activated but has expired!")
     elif LexActivator.StatusCodes.LA_SUSPENDED == status:
