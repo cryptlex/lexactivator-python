@@ -75,6 +75,10 @@ SetLicenseKey = library.SetLicenseKey
 SetLicenseKey.argtypes = [CSTRTYPE]
 SetLicenseKey.restype = c_int
 
+SetLicenseUserCredential = library.SetLicenseUserCredential
+SetLicenseUserCredential.argtypes = [CSTRTYPE, CSTRTYPE]
+SetLicenseUserCredential.restype = c_int
+
 SetLicenseCallback = library.SetLicenseCallback
 SetLicenseCallback.argtypes = [CallbackType]
 SetLicenseCallback.restype = c_int
@@ -304,6 +308,8 @@ class StatusCodes:
     LA_E_TIME_MODIFIED = 69
 
     LA_E_RELEASE_VERSION_FORMAT = 70
+
+    LA_E_AUTHENTICATION_FAILED = 71
 
     LA_E_VM = 80
 
