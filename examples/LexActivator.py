@@ -111,6 +111,10 @@ GetLicenseMetadata = library.GetLicenseMetadata
 GetLicenseMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetLicenseMetadata.restype = c_int
 
+GetLicenseMeterAttribute = library.GetLicenseMeterAttribute
+GetLicenseMeterAttribute.argtypes = [CSTRTYPE, POINTER(c_uint32), POINTER(c_uint32)]
+GetLicenseMeterAttribute.restype = c_int
+
 GetLicenseKey = library.GetLicenseKey
 GetLicenseKey.argtypes = [STRTYPE, c_uint32]
 GetLicenseKey.restype = c_int
@@ -142,6 +146,10 @@ GetLicenseType.restype = c_int
 GetActivationMetadata = library.GetActivationMetadata
 GetActivationMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetActivationMetadata.restype = c_int
+
+GetActivationMeterAttributeUses = library.GetActivationMeterAttributeUses
+GetActivationMeterAttributeUses.argtypes = [CSTRTYPE, POINTER(c_uint32)]
+GetActivationMeterAttributeUses.restype = c_int
 
 GetServerSyncGracePeriodExpiryDate = library.GetServerSyncGracePeriodExpiryDate
 GetServerSyncGracePeriodExpiryDate.argtypes = [POINTER(c_uint32)]
@@ -222,6 +230,18 @@ IsLocalTrialGenuine.restype = c_int
 ExtendLocalTrial = library.ExtendLocalTrial
 ExtendLocalTrial.argtypes = [c_uint32]
 ExtendLocalTrial.restype = c_int
+
+IncrementActivationMeterAttributeUses = library.IncrementActivationMeterAttributeUses
+IncrementActivationMeterAttributeUses.argtypes = [CSTRTYPE, c_uint32]
+IncrementActivationMeterAttributeUses.restype = c_int
+
+DecrementActivationMeterAttributeUses = library.DecrementActivationMeterAttributeUses
+DecrementActivationMeterAttributeUses.argtypes = [CSTRTYPE, c_uint32]
+DecrementActivationMeterAttributeUses.restype = c_int
+
+ResetActivationMeterAttributeUses = library.ResetActivationMeterAttributeUses
+ResetActivationMeterAttributeUses.argtypes = [CSTRTYPE]
+ResetActivationMeterAttributeUses.restype = c_int
 
 Reset = library.Reset
 Reset.argtypes = []
@@ -310,6 +330,10 @@ class StatusCodes:
     LA_E_RELEASE_VERSION_FORMAT = 70
 
     LA_E_AUTHENTICATION_FAILED = 71
+
+    LA_E_METER_ATTRIBUTE_NOT_FOUND = 72
+
+    LA_E_METER_ATTRIBUTE_USES_LIMIT_REACHED = 73
 
     LA_E_VM = 80
 
