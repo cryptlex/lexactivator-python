@@ -94,7 +94,7 @@ def main():
     if LexActivator.StatusCodes.LA_OK == status:
         expiryDate = ctypes.c_uint()
         LexActivator.GetLicenseExpiryDate(ctypes.byref(expiryDate))
-        daysLeft = (expiryDate.value - time.time()) / 86500
+        daysLeft = (expiryDate.value - time.time()) / 86400
         print("Days left: ", daysLeft)
         bufferSize = 256
         name = get_ctype_string_buffer(bufferSize)
