@@ -1,5 +1,5 @@
 import ctypes
-import cryptlex.lexactivator.lexactivator_native as LexActivatorNative
+from cryptlex.lexactivator import lexactivator_native as LexActivatorNative
 from cryptlex.lexactivator.lexstatus_codes import LexStatusCodes
 from cryptlex.lexactivator.lexactivator_exception import LexActivatorException
 
