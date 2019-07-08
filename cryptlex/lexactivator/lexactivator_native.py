@@ -1,8 +1,7 @@
 from ctypes import *
-import os, sys, inspect
+import os, sys, platform, inspect, subprocess
 import ctypes
 import ctypes.util
-
 
 def UNCHECKED(type):
     if (hasattr(type, "_type_") and isinstance(type._type_, str)
@@ -11,17 +10,33 @@ def UNCHECKED(type):
     else:
         return c_void_p
 
+def is_os_64bit():
+    return platform.machine().endswith('64')
+
+def is_musl():
+	if 'musl' in subprocess.check_output(['ldd', '--version']):
+		return True
+	return False
+
+
 
 def get_library_path():
+    compiler = 'gcc'
+    arch = 'x86'
+    if(is_os_64bit()):
+        arch = 'x86_64'
     # Get the working directory of this file
     filename = inspect.getframeinfo(inspect.currentframe()).filename
     dir_path = os.path.dirname(os.path.abspath(filename))
+    # dir_path = os.getcwd()
     if sys.platform == 'darwin':
-        return os.path.join(dir_path, "libLexActivator.dylib")
+        return os.path.join(dir_path, "libs/macos/"+arch+"/libLexActivator.dylib")
     elif sys.platform == 'linux':
-        return os.path.join(dir_path, "libLexActivator.so")
+        if(is_musl()):
+            compiler = 'musl'
+        return os.path.join(dir_path, "libs/linux/"+compiler+"/"+arch+"/libLexActivator.so")
     elif sys.platform == 'win32':
-        return os.path.join(dir_path, "LexActivator.dll")
+        return os.path.join(dir_path, "libs/win32/"+arch+"/LexActivator.dll")
     else:
         raise TypeError("Platform not supported!")
 
@@ -43,6 +58,18 @@ def get_char_type():
     else:
         return c_char_p
 
+def get_ctype_string_buffer(size):
+    if sys.platform == 'win32':
+        return ctypes.create_unicode_buffer(size)
+    else:
+        return ctypes.create_string_buffer(size)
+
+def get_ctype_string(input):
+    if sys.platform == 'win32':
+        return ctypes.c_wchar_p(input)
+    else:
+        return ctypes.c_char_p(input)
+
 
 library = load_library(get_library_path())
 
@@ -51,12 +78,6 @@ CSTRTYPE = get_char_type()
 STRTYPE = get_char_type()
 
 CallbackType = CFUNCTYPE(UNCHECKED(None), c_uint32)
-
-
-class PermissionFlags:
-    LA_USER = 1
-    LA_SYSTEM = 2
-    LA_IN_MEMORY = 4
 
 
 SetProductFile = library.SetProductFile
@@ -248,101 +269,3 @@ Reset.argtypes = []
 Reset.restype = c_int
 
 
-class StatusCodes:
-    LA_OK = 0
-
-    LA_FAIL = 1
-
-    LA_EXPIRED = 20
-
-    LA_SUSPENDED = 21
-
-    LA_GRACE_PERIOD_OVER = 22
-
-    LA_TRIAL_EXPIRED = 25
-
-    LA_LOCAL_TRIAL_EXPIRED = 26
-
-    LA_RELEASE_UPDATE_AVAILABLE = 30
-
-    LA_RELEASE_NO_UPDATE_AVAILABLE = 31
-
-    LA_E_FILE_PATH = 40
-
-    LA_E_PRODUCT_FILE = 41
-
-    LA_E_PRODUCT_DATA = 42
-
-    LA_E_PRODUCT_ID = 43
-
-    LA_E_SYSTEM_PERMISSION = 44
-
-    LA_E_FILE_PERMISSION = 45
-
-    LA_E_WMIC = 46
-
-    LA_E_TIME = 47
-
-    LA_E_INET = 48
-
-    LA_E_NET_PROXY = 49
-
-    LA_E_HOST_URL = 50
-
-    LA_E_BUFFER_SIZE = 51
-
-    LA_E_APP_VERSION_LENGTH = 52
-
-    LA_E_REVOKED = 53
-
-    LA_E_LICENSE_KEY = 54
-
-    LA_E_LICENSE_TYPE = 55
-
-    LA_E_OFFLINE_RESPONSE_FILE = 56
-
-    LA_E_OFFLINE_RESPONSE_FILE_EXPIRED = 57
-
-    LA_E_ACTIVATION_LIMIT = 58
-
-    LA_E_ACTIVATION_NOT_FOUND = 59
-
-    LA_E_DEACTIVATION_LIMIT = 60
-
-    LA_E_TRIAL_NOT_ALLOWED = 61
-
-    LA_E_TRIAL_ACTIVATION_LIMIT = 62
-
-    LA_E_MACHINE_FINGERPRINT = 63
-
-    LA_E_METADATA_KEY_LENGTH = 64
-
-    LA_E_METADATA_VALUE_LENGTH = 65
-
-    LA_E_ACTIVATION_METADATA_LIMIT = 66
-
-    LA_E_TRIAL_ACTIVATION_METADATA_LIMIT = 67
-
-    LA_E_METADATA_KEY_NOT_FOUND = 68
-
-    LA_E_TIME_MODIFIED = 69
-
-    LA_E_RELEASE_VERSION_FORMAT = 70
-
-    LA_E_AUTHENTICATION_FAILED = 71
-
-    LA_E_METER_ATTRIBUTE_NOT_FOUND = 72
-
-    LA_E_METER_ATTRIBUTE_USES_LIMIT_REACHED = 73
-
-    LA_E_VM = 80
-
-    LA_E_COUNTRY = 81
-
-    LA_E_IP = 82
-
-    LA_E_RATE_LIMIT = 90
-
-    LA_E_SERVER = 91
-
-    LA_E_CLIENT = 92
