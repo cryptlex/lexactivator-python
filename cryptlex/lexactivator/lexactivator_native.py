@@ -21,7 +21,13 @@ def is_os_64bit():
 
 
 def is_musl():
-    if 'musl' in subprocess.check_output(['ldd', '--version']):
+    command = ['ldd', '--version']
+    try:
+        output = subprocess.check_output(
+            command, stderr=subprocess.STDOUT).decode()
+    except subprocess.CalledProcessError as e:
+        output = e.output.decode()
+    if 'musl' in output:
         return True
     return False
 
