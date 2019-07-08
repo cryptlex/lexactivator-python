@@ -1,2 +1,1 @@
-from lexactivator import *
-import os
+from cryptlex.lexactivator import *

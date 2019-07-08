@@ -1,7 +1,12 @@
 from ctypes import *
-import os, sys, platform, inspect, subprocess
+import os
+import sys
+import platform
+import inspect
+import subprocess
 import ctypes
 import ctypes.util
+
 
 def UNCHECKED(type):
     if (hasattr(type, "_type_") and isinstance(type._type_, str)
@@ -10,14 +15,15 @@ def UNCHECKED(type):
     else:
         return c_void_p
 
+
 def is_os_64bit():
     return platform.machine().endswith('64')
 
-def is_musl():
-	if 'musl' in subprocess.check_output(['ldd', '--version']):
-		return True
-	return False
 
+def is_musl():
+    if 'musl' in subprocess.check_output(['ldd', '--version']):
+        return True
+    return False
 
 
 def get_library_path():
@@ -58,11 +64,13 @@ def get_char_type():
     else:
         return c_char_p
 
+
 def get_ctype_string_buffer(size):
     if sys.platform == 'win32':
         return ctypes.create_unicode_buffer(size)
     else:
         return ctypes.create_string_buffer(size)
+
 
 def get_ctype_string(input):
     if sys.platform == 'win32':
@@ -133,7 +141,8 @@ GetLicenseMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetLicenseMetadata.restype = c_int
 
 GetLicenseMeterAttribute = library.GetLicenseMeterAttribute
-GetLicenseMeterAttribute.argtypes = [CSTRTYPE, POINTER(c_uint32), POINTER(c_uint32)]
+GetLicenseMeterAttribute.argtypes = [
+    CSTRTYPE, POINTER(c_uint32), POINTER(c_uint32)]
 GetLicenseMeterAttribute.restype = c_int
 
 GetLicenseKey = library.GetLicenseKey
@@ -267,5 +276,3 @@ ResetActivationMeterAttributeUses.restype = c_int
 Reset = library.Reset
 Reset.argtypes = []
 Reset.restype = c_int
-
-

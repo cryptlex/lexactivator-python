@@ -55,8 +55,8 @@ def main():
             print("License user: ", username)
             print("License is genuinely activated!")
 
-            print("Checking for software release update...")
-            LexActivator.CheckForReleaseUpdate("windows", "1.0.0", "stable", software_release_update_callback)
+            # print("Checking for software release update...")
+            # LexActivator.CheckForReleaseUpdate("windows", "1.0.0", "stable", software_release_update_callback)
         elif LexStatusCodes.LA_EXPIRED == status:
             print("License is genuinely activated but has expired!")
         elif LexStatusCodes.LA_SUSPENDED == status:
