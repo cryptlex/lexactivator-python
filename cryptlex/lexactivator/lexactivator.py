@@ -255,7 +255,7 @@ class LexActivator:
             cstring_key, buffer, buffer_size)
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
-        return buffer.value
+        return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
     def GetLicenseMetadata(key):
@@ -277,7 +277,7 @@ class LexActivator:
             cstring_key, buffer, buffer_size)
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
-        return buffer.value
+        return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
     def GetLicenseMeterAttribute(name):
@@ -317,7 +317,7 @@ class LexActivator:
         status = LexActivatorNative.GetLicenseKey(buffer, buffer_size)
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
-        return buffer.value
+        return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
     def GetLicenseExpiryDate():
@@ -354,7 +354,7 @@ class LexActivator:
         status = LexActivatorNative.GetLicenseUserEmail(buffer, buffer_size)
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
-        return buffer.value
+        return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
     def GetLicenseUserName():
@@ -371,7 +371,7 @@ class LexActivator:
         status = LexActivatorNative.GetLicenseUserName(buffer, buffer_size)
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
-        return buffer.value
+        return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
     def GetLicenseUserCompany():
@@ -388,7 +388,7 @@ class LexActivator:
         status = LexActivatorNative.GetLicenseUserCompany(buffer, buffer_size)
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
-        return buffer.value
+        return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
     def GetLicenseUserMetadata(key):
@@ -410,7 +410,7 @@ class LexActivator:
             cstring_key, buffer, buffer_size)
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
-        return buffer.value
+        return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
     def GetLicenseType():
@@ -427,7 +427,7 @@ class LexActivator:
         status = LexActivatorNative.GetLicenseType(buffer, buffer_size)
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
-        return buffer.value
+        return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
     def GetActivationMetadata(key):
@@ -449,7 +449,7 @@ class LexActivator:
             cstring_key, buffer, buffer_size)
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
-        return buffer.value
+        return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
     def GetActivationMeterAttributeUses(name):
@@ -512,7 +512,7 @@ class LexActivator:
             cstring_key, buffer, buffer_size)
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
-        return buffer.value
+        return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
     def GetTrialExpiryDate():
@@ -549,7 +549,7 @@ class LexActivator:
         status = LexActivatorNative.GetTrialId(buffer, buffer_size)
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
-        return buffer.value
+        return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
     def GetLocalTrialExpiryDate():

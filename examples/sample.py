@@ -1,23 +1,30 @@
-import sys, ctypes, time
-import grequests
-
+import sys
+import ctypes
+import time
 
 from cryptlex.lexactivator import LexActivator, LexStatusCodes, PermissionFlags, LexActivatorException
 # from cryptlex.lexactivator import *
 
+
 def init():
     #status = LexActivator.SetProductFile("ABSOLUTE_PATH_OF_PRODUCT.DAT_FILE")
     LexActivator.SetProductData("PASTE_CONTENT_OF_PRODUCT.DAT_FILE")
-    LexActivator.SetProductId("PASTE_PRODUCT_ID", PermissionFlags.LA_USER)
+    LexActivator.SetProductId(
+        "PASTE_PRODUCT_ID", PermissionFlags.LA_USER)
     LexActivator.SetAppVersion("PASTE_YOUR_APP_VERION")
 
 # License callback is invoked when IsLicenseGenuine() completes a server sync
+
+
 def licence_callback(status):
     print("License status: ", status)
 
 # Software release update callback is invoked when CheckForReleaseUpdate() gets a response from the server
+
+
 def software_release_update_callback(status):
     print("Release status: ", status)
+
 
 def activate():
     LexActivator.SetLicenseKey("PASTE_LICENCE_KEY")
@@ -38,7 +45,7 @@ def activateTrial():
         print("Product trial has expired!")
     else:
         print("Product trial activation failed: ", status)
-    
+
 
 def main():
     try:
@@ -79,7 +86,8 @@ def main():
                 # Activating the trial
                 activateTrial()
     except LexActivatorException as exception:
-        print('Error code:',exception.code, exception.message)
+        print('Error code:', exception.code, exception.message)
+
 
 main()
 input("Press Enter to continue...")

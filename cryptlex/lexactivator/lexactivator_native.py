@@ -82,7 +82,14 @@ def get_ctype_string(input):
     if sys.platform == 'win32':
         return ctypes.c_wchar_p(input)
     else:
-        return ctypes.c_char_p(input)
+        return ctypes.c_char_p(input.encode('utf-8'))
+
+
+def byte_to_string(input):
+    if sys.platform == 'win32':
+        return input
+    else:
+        return input.decode('utf-8')
 
 
 library = load_library(get_library_path())
