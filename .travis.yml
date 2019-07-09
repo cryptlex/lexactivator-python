@@ -10,7 +10,10 @@ before_deploy:
 deploy:
   provider: pypi
   skip_cleanup: true
+  skip_existing: true
   user: adnan-kamili
   password:
     secure: FXyKbrXpvgnLs3EbKb/GQTIoQG3Gs6e+dgDQ6vKaU+EkqW9M1NZrV6aLtUsM4Pi2/Z5yMB6+R6hYclZiaf4tDMkoZ2N6KWoZMVSwDIJky7Gc22ZTsL7hgmyFbRewHKkQ1mn46R7d/WetwaYozrturQ+/NUCFQOC68G6Xj43Vp1jP6HSLyH9EMis9GporSEGzkKc8pwA+s/aO6TmlYqcyicudIZoNhinB5Ar3Q7DPW0QqRvxehAeOKtlcmUTu8nFCfikTsY5XR6iYOPld0V6CxPfhcTilU3FJZ+oh3OT3AcnfwXJoHgwF4skfqTz3F01vCg+5gDekaRgdyKpLhrEECV5dIilN9k90rLQ0zMoJNWNRWYOc3/yBUa8eSdaNi8bZ7zoSoGElNCOaO6xoQCemFxGJH4KBMj9RFL8nTx2V+MohG1vw51pCDuq0b/tl8ivQRgLahmkBzjmyWHlUVBvJbwIBaJNnEP/47PgoU0cArnAqXw/hjQSOT831bVVhuD6zjB9wzKdjA/9y5jGbfNHG2hM1VoeIvpp1+C/W7MIH7N/+4yQYe6NS7r/Xf4JgGroDafL2lI/3UZWLT+Wv2Yk3R7F7NrD1u04JDEKlwVtAlMHLYVYL5OdUFPmlXX76tf092eSL9VppwVsbGcTuUfE21ypxrVtMKfEqT6R2OOKkcJE=
   distributions: sdist bdist_wheel
+  on:
+    tags: true
