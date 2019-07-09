@@ -22,7 +22,7 @@ class FileInfo(object):
 def download(url, files):
     print (url)
     result = requests.get(url, stream=True)
-    zip = zipfile.ZipFile(StringIO.StringIO(result.content))
+    zip = zipfile.ZipFile(StringIO(result.content))
     if not os.path.exists(tmp_dir):
         os.makedirs(tmp_dir)
     zip.extractall(tmp_dir)
