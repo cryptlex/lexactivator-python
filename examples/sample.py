@@ -33,7 +33,7 @@ def activate():
     if LexStatusCodes.LA_OK == status or LexStatusCodes.LA_EXPIRED == status or LexStatusCodes.LA_SUSPENDED == status:
         print("License activated successfully: ", status)
     else:
-        print("License activation failed: ", status, LexStatusCodes.LA_OK)
+        print("License activation failed: ", status)
 
 
 def activateTrial():
