@@ -54,7 +54,8 @@ class LexActivator:
         Raises:
                 LexActivatorException
         """
-        cstring_product_data = LexActivatorNative.get_ctype_string(product_data)
+        cstring_product_data = LexActivatorNative.get_ctype_string(
+            product_data)
         status = LexActivatorNative.SetProductData(cstring_product_data)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
@@ -111,7 +112,8 @@ class LexActivator:
         cstring_email = LexActivatorNative.get_ctype_string(email)
         cstring_password = LexActivatorNative.get_ctype_string(password)
 
-        status = LexActivatorNative.SetLicenseUserCredential(cstring_email, cstring_password)
+        status = LexActivatorNative.SetLicenseUserCredential(
+            cstring_email, cstring_password)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
 
@@ -153,7 +155,8 @@ class LexActivator:
         """
         cstring_key = LexActivatorNative.get_ctype_string(key)
         cstring_value = LexActivatorNative.get_ctype_string(value)
-        status = LexActivatorNative.SetActivationMetadata(cstring_key, cstring_value)
+        status = LexActivatorNative.SetActivationMetadata(
+            cstring_key, cstring_value)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
 
@@ -173,7 +176,8 @@ class LexActivator:
         """
         cstring_key = LexActivatorNative.get_ctype_string(key)
         cstring_value = LexActivatorNative.get_ctype_string(value)
-        status = LexActivatorNative.SetTrialActivationMetadata(cstring_key, cstring_value)
+        status = LexActivatorNative.SetTrialActivationMetadata(
+            cstring_key, cstring_value)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
 
@@ -464,9 +468,10 @@ class LexActivator:
         Returns:
                 int: value of meter attribute uses by the activation
         """
+        cstring_name = LexActivatorNative.get_ctype_string(name)
         uses = ctypes.c_uint()
         status = LexActivatorNative.GetActivationMeterAttributeUses(
-            name, ctypes.byref(uses))
+            cstring_name, ctypes.byref(uses))
         if status == LexStatusCodes.LA_OK:
             return uses.value
         else:
@@ -663,7 +668,8 @@ class LexActivator:
                 LexActivatorException
         """
         cstring_file_path = LexActivatorNative.get_ctype_string(file_path)
-        status = LexActivatorNative.GenerateOfflineActivationRequest(cstring_file_path)
+        status = LexActivatorNative.GenerateOfflineActivationRequest(
+            cstring_file_path)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
 
@@ -993,7 +999,8 @@ class LexActivator:
                 LexActivatorException
         """
         cstring_name = LexActivatorNative.get_ctype_string(name)
-        status = LexActivatorNative.ResetActivationMeterAttributeUses(cstring_name)
+        status = LexActivatorNative.ResetActivationMeterAttributeUses(
+            cstring_name)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
 
