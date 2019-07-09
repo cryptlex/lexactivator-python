@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/cryptlex/lexactivator-python.svg?branch=master)]
 # cryptlex.lexactivator
 
 Cryptlex lets you license your software apps effortlessly. You can easily generate license keys using the REST API or Dashboard and validate the license keys in your software apps using LexActivator (Cryptlex client library).
