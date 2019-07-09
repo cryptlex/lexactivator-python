@@ -4,10 +4,7 @@ import platform
 import subprocess
 import os
 import shutil
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
+import io
 
 tmp_dir = "./tmp"
 lexactivator_libs_version = 'v3.7.1'
@@ -22,7 +19,7 @@ class FileInfo(object):
 def download(url, files):
     print (url)
     result = requests.get(url, stream=True)
-    zip = zipfile.ZipFile(StringIO(result.content))
+    zip = zipfile.ZipFile(io.BytesIO(result.content))
     if not os.path.exists(tmp_dir):
         os.makedirs(tmp_dir)
     zip.extractall(tmp_dir)
