@@ -5,6 +5,7 @@ class LexActivatorException(Exception):
     def __init__(self, code):
         super(LexActivatorException, self).__init__(
             LexActivatorException.get_error_message(code))
+        self.message = LexActivatorException.get_error_message(code)
         self.code = code
 
     @staticmethod
