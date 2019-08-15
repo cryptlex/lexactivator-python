@@ -300,9 +300,9 @@ class LexActivator:
         allowed_uses = ctypes.c_uint()
         total_uses = ctypes.c_uint()
         status = LexActivatorNative.GetLicenseMeterAttribute(
-            ctypes.byref(allowed_uses), ctypes.byref(total_uses))
+            cstring_name, ctypes.byref(allowed_uses), ctypes.byref(total_uses))
         if status == LexStatusCodes.LA_OK:
-            return LicenseMeterAttribute(cstring_name, allowed_uses.value, total_uses.value)
+            return LicenseMeterAttribute(name, allowed_uses.value, total_uses.value)
         else:
             raise LexActivatorException(status)
 
@@ -884,7 +884,7 @@ class LexActivator:
 
     @staticmethod
     def ActivateLocalTrial(trialLength):
-        """Starts the local(unverified) trial.
+        """Starts the local (unverified) trial.
 
         This function should be executed when your application starts first time on
         the user's computer, ideally on a button click.
