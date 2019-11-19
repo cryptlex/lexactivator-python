@@ -201,6 +201,26 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
+    def SetOfflineActivationRequestMeterAttributeUses(name, uses):
+        """Sets the meter attribute uses for the offline activation request.
+
+        This function should only be called before GenerateOfflineActivationRequest()
+        function to set the meter attributes in case of offline activation.
+
+        Args:
+                name (str): name of the meter attribute
+                uses (int): the uses value
+
+        Raises:
+                LexActivatorException
+        """
+        cstring_name = LexActivatorNative.get_ctype_string(name)
+        status = LexActivatorNative.SetOfflineActivationRequestMeterAttributeUses(
+            cstring_name, uses)
+        if LexStatusCodes.LA_OK != status:
+            raise LexActivatorException(status)
+
+    @staticmethod
     def SetNetworkProxy(proxy):
         """Sets the network proxy to be used when contacting CryptLex servers.
 

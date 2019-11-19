@@ -137,6 +137,10 @@ SetAppVersion = library.SetAppVersion
 SetAppVersion.argtypes = [CSTRTYPE]
 SetAppVersion.restype = c_int
 
+SetOfflineActivationRequestMeterAttributeUses = library.SetOfflineActivationRequestMeterAttributeUses
+SetOfflineActivationRequestMeterAttributeUses.argtypes = [CSTRTYPE, c_uint32]
+SetOfflineActivationRequestMeterAttributeUses.restype = c_int
+
 SetNetworkProxy = library.SetNetworkProxy
 SetNetworkProxy.argtypes = [CSTRTYPE]
 SetNetworkProxy.restype = c_int
