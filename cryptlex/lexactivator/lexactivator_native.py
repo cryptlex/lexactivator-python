@@ -19,6 +19,18 @@ def UNCHECKED(type):
 def is_os_64bit():
     return platform.machine().endswith('64')
 
+def get_arch():
+    is_64bits = sys.maxsize > 2**32
+    machine = platform.machine().lower()
+    if 'arm' in machine:
+        if is_64bits:
+            return 'arm64'
+        else:
+            return 'armhf'
+    elif is_64bits:
+        return 'x86_64'
+    else:
+        return 'x86'
 
 def is_musl():
     command = ['ldd', '--version']
@@ -34,9 +46,7 @@ def is_musl():
 
 def get_library_path():
     compiler = 'gcc'
-    arch = 'x86'
-    if(is_os_64bit()):
-        arch = 'x86_64'
+    arch = get_arch()
     # Get the working directory of this file
     filename = inspect.getframeinfo(inspect.currentframe()).filename
     dir_path = os.path.dirname(os.path.abspath(filename))

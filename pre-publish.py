@@ -52,6 +52,10 @@ def main():
                  '/linux/gcc/x86_64/libLexActivator.so'),
         FileInfo('libs/gcc/i386/libLexActivator.so', base_path +
                  '/linux/gcc/x86/libLexActivator.so'),
+        FileInfo('libs/gcc/arm64/libLexActivator.so', base_path +
+                 '/linux/gcc/arm64/libLexActivator.so'),
+        FileInfo('libs/gcc/armhf/libLexActivator.so', base_path +
+                 '/linux/gcc/armhf/libLexActivator.so'),
         FileInfo('libs/musl/amd64/libLexActivator.so', base_path +
                  '/linux/musl/x86_64/libLexActivator.so'),
     ]
