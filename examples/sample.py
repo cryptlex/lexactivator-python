@@ -1,5 +1,4 @@
 import sys
-import ctypes
 import time
 
 from cryptlex.lexactivator import LexActivator, LexStatusCodes, PermissionFlags, LexActivatorException
@@ -73,9 +72,8 @@ def main():
         else:
             trialStatus = LexActivator.IsTrialGenuine()
             if LexStatusCodes.LA_OK == trialStatus:
-                trialExpiryDate = ctypes.c_uint()
-                LexActivator.GetTrialExpiryDate(ctypes.byref(trialExpiryDate))
-                daysLeft = (trialExpiryDate.value - time.time()) / 86400
+                trialExpiryDate = LexActivator.GetTrialExpiryDate()
+                daysLeft = (trialExpiryDate - time.time()) / 86400
                 print("Trial days left: ", daysLeft)
             elif LexStatusCodes.LA_TRIAL_EXPIRED == trialStatus:
                 print("Trial has expired!")
