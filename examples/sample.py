@@ -6,7 +6,6 @@ from cryptlex.lexactivator import LexActivator, LexStatusCodes, PermissionFlags,
 
 
 def init():
-    #status = LexActivator.SetProductFile("ABSOLUTE_PATH_OF_PRODUCT.DAT_FILE")
     LexActivator.SetProductData("PASTE_CONTENT_OF_PRODUCT.DAT_FILE")
     LexActivator.SetProductId(
         "PASTE_PRODUCT_ID", PermissionFlags.LA_USER)
