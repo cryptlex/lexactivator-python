@@ -53,7 +53,7 @@ def get_library_path():
     # dir_path = os.getcwd()
     if sys.platform == 'darwin':
         return os.path.join(dir_path, "libs/macos/"+arch+"/libLexActivator.dylib")
-    elif sys.platform == 'linux':
+    elif sys.platform.startswith('linux'):
         if(is_musl()):
             compiler = 'musl'
         return os.path.join(dir_path, "libs/linux/"+compiler+"/"+arch+"/libLexActivator.so")
