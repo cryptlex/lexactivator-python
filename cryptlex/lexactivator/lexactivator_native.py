@@ -66,7 +66,7 @@ def get_library_path():
 def load_library(path):
     if sys.platform == 'darwin':
         return ctypes.CDLL(path, ctypes.RTLD_GLOBAL)
-    elif sys.platform == 'linux':
+    elif sys.platform.startswith('linux'):
         return ctypes.cdll.LoadLibrary(path)
     elif sys.platform == 'win32':
         return ctypes.cdll.LoadLibrary(path)
