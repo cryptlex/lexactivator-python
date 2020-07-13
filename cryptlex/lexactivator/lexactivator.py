@@ -13,10 +13,11 @@ class PermissionFlags:
 
 
 class LicenseMeterAttribute(object):
-    def __init__(self, name, allowed_uses, total_uses):
+    def __init__(self, name, allowed_uses, total_uses, gross_uses):
         self.name = name
         self.allowed_uses = allowed_uses
         self.total_uses = total_uses
+        self.gross_uses = gross_uses
 
 
 class LexActivator:
@@ -77,6 +78,30 @@ class LexActivator:
         """
         cstring_product_id = LexActivatorNative.get_ctype_string(product_id)
         status = LexActivatorNative.SetProductId(cstring_product_id, flags)
+        if LexStatusCodes.LA_OK != status:
+            raise LexActivatorException(status)
+    
+    @staticmethod
+    def SetCustomDeviceFingerprint(fingerprint):
+        """In case you don't want to use the LexActivator's advanced
+        device fingerprinting algorithm, this function can be used to set a custom
+        device fingerprint.
+
+        If you decide to use your own custom device fingerprint then this function must be
+        called on every start of your program immediately after calling SetProductFile()
+        or SetProductData() function.
+
+        The license fingerprint matching strategy is ignored if this function is used.
+
+        Args:
+                fingerprint (str): string of minimum length 64 characters and maximum length 256 characters
+
+        Raises:
+                LexActivatorException
+        """
+        cstring_fingerprint = LexActivatorNative.get_ctype_string(
+            fingerprint)
+        status = LexActivatorNative.SetProductData(cstring_fingerprint)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
 
@@ -305,7 +330,7 @@ class LexActivator:
 
     @staticmethod
     def GetLicenseMeterAttribute(name):
-        """Gets the license meter attribute allowed uses and total uses.
+        """Gets the license meter attribute allowed, total and gross uses.
 
         Args:
                 name (str): name of the meter attribute
@@ -314,15 +339,16 @@ class LexActivator:
                 LexActivatorException
 
         Returns:
-                LicenseMeterAttribute: values of meter attribute allowed and total uses
+                LicenseMeterAttribute: values of meter attribute allowed, total and gross uses
         """
         cstring_name = LexActivatorNative.get_ctype_string(name)
         allowed_uses = ctypes.c_uint()
         total_uses = ctypes.c_uint()
+        gross_uses = ctypes.c_uint()
         status = LexActivatorNative.GetLicenseMeterAttribute(
-            cstring_name, ctypes.byref(allowed_uses), ctypes.byref(total_uses))
+            cstring_name, ctypes.byref(allowed_uses), ctypes.byref(total_uses), ctypes.byref(gross_uses))
         if status == LexStatusCodes.LA_OK:
-            return LicenseMeterAttribute(name, allowed_uses.value, total_uses.value)
+            return LicenseMeterAttribute(name, allowed_uses.value, total_uses.value, gross_uses.value)
         else:
             raise LexActivatorException(status)
 
@@ -342,6 +368,46 @@ class LexActivator:
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
         return LexActivatorNative.byte_to_string(buffer.value)
+
+    @staticmethod
+    def GetLicenseAllowedActivations():
+        """Gets the allowed activations of the license.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: the allowed activation
+        """
+        allowed_activations = ctypes.c_uint()
+        status = LexActivatorNative.GetLicenseAllowedActivations(
+            ctypes.byref(allowed_activations))
+        if status == LexStatusCodes.LA_OK:
+            return allowed_activations.value
+        elif status == LexStatusCodes.LA_FAIL:
+            return 0
+        else:
+            raise LexActivatorException(status)
+
+    @staticmethod
+    def GetLicenseTotalActivations():
+        """Gets the total activations of the license.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: the total activations
+        """
+        total_activations = ctypes.c_uint()
+        status = LexActivatorNative.GetLicenseTotalActivations(
+            ctypes.byref(total_activations))
+        if status == LexStatusCodes.LA_OK:
+            return total_activations.value
+        elif status == LexStatusCodes.LA_FAIL:
+            return 0
+        else:
+            raise LexActivatorException(status)
 
     @staticmethod
     def GetLicenseExpiryDate():
@@ -595,6 +661,23 @@ class LexActivator:
             return 0
         else:
             raise LexActivatorException(status)
+
+    @staticmethod
+    def GetLibraryVersion():
+        """Gets the version of this library.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                str: the library version
+        """
+        buffer_size = 256
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetLibraryVersion(buffer, buffer_size)
+        if status != LexStatusCodes.LA_OK:
+            raise LexActivatorException(status)
+        return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
     def CheckForReleaseUpdate(platform, version, channel, release_callback):

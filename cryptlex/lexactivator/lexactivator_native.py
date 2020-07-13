@@ -123,6 +123,10 @@ SetProductId = library.SetProductId
 SetProductId.argtypes = [CSTRTYPE, c_uint32]
 SetProductId.restype = c_int
 
+SetCustomDeviceFingerprint = library.SetCustomDeviceFingerprint
+SetCustomDeviceFingerprint.argtypes = [CSTRTYPE]
+SetCustomDeviceFingerprint.restype = c_int
+
 SetLicenseKey = library.SetLicenseKey
 SetLicenseKey.argtypes = [CSTRTYPE]
 SetLicenseKey.restype = c_int
@@ -169,12 +173,20 @@ GetLicenseMetadata.restype = c_int
 
 GetLicenseMeterAttribute = library.GetLicenseMeterAttribute
 GetLicenseMeterAttribute.argtypes = [
-    CSTRTYPE, POINTER(c_uint32), POINTER(c_uint32)]
+    CSTRTYPE, POINTER(c_uint32), POINTER(c_uint32), POINTER(c_uint32)]
 GetLicenseMeterAttribute.restype = c_int
 
 GetLicenseKey = library.GetLicenseKey
 GetLicenseKey.argtypes = [STRTYPE, c_uint32]
 GetLicenseKey.restype = c_int
+
+GetLicenseAllowedActivations = library.GetLicenseAllowedActivations
+GetLicenseAllowedActivations.argtypes = [POINTER(c_uint32)]
+GetLicenseAllowedActivations.restype = c_int
+
+GetLicenseTotalActivations = library.GetLicenseTotalActivations
+GetLicenseTotalActivations.argtypes = [POINTER(c_uint32)]
+GetLicenseTotalActivations.restype = c_int
 
 GetLicenseExpiryDate = library.GetLicenseExpiryDate
 GetLicenseExpiryDate.argtypes = [POINTER(c_uint32)]
@@ -227,6 +239,10 @@ GetTrialId.restype = c_int
 GetLocalTrialExpiryDate = library.GetLocalTrialExpiryDate
 GetLocalTrialExpiryDate.argtypes = [POINTER(c_uint32)]
 GetLocalTrialExpiryDate.restype = c_int
+
+GetLibraryVersion = library.GetLibraryVersion
+GetLibraryVersion.argtypes = [STRTYPE, c_uint32]
+GetLibraryVersion.restype = c_int
 
 CheckForReleaseUpdate = library.CheckForReleaseUpdate
 CheckForReleaseUpdate.argtypes = [CSTRTYPE, CSTRTYPE, CSTRTYPE, CallbackType]
