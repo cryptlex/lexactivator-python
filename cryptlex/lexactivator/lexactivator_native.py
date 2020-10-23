@@ -50,7 +50,10 @@ def get_library_path():
     # Get the working directory of this file
     filename = inspect.getframeinfo(inspect.currentframe()).filename
     dir_path = os.path.dirname(os.path.abspath(filename))
-    # dir_path = os.getcwd()
+
+    if not os.path.exists(dir_path):
+        dir_path = os.path.abspath(os.path.dirname(__file__))
+
     if sys.platform == 'darwin':
         return os.path.join(dir_path, "libs/macos/"+arch+"/libLexActivator.dylib")
     elif sys.platform.startswith('linux'):
