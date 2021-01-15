@@ -22,7 +22,7 @@ def is_os_64bit():
 def get_arch():
     is_64bits = sys.maxsize > 2**32
     machine = platform.machine().lower()
-    if 'arm' in machine:
+    if 'arm' in machine or 'aarch64' in machine:
         if is_64bits:
             return 'arm64'
         else:
