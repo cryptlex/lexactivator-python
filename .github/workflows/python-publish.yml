@@ -38,9 +38,9 @@ jobs:
           git push & git push --tags
      
   deploy:
-
+    needs: update-version
     runs-on: ubuntu-latest
-
+    
     steps:
     - uses: actions/checkout@v2
     - run: git pull origin master --ff-only
