@@ -29,20 +29,15 @@ jobs:
         run: |
           sed -i '/lexactivator_libs_version =/!b;clexactivator_libs_version = "v${{ github.event.inputs.libraryVersion }}"' pre-publish.py
      
-      - name: Commit and Tag
+      - name: Commit, Tag and Push
         run: |
           git add pre-publish.py
           git add setup.py
           git config --local user.email "github-actions@users.noreply.github.com"
           git config --local user.name "github-actions"
           git commit -m "updated version" | exit 0
-          git tag ${{ github.event.inputs.packageVersion }}    
-      
-      - name: Push Changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tags: true 
+          git tag ${{ github.event.inputs.packageVersion }}
+          git push --follow-tags
      
   deploy:
 
@@ -50,6 +45,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - run: git pull origin master --ff-only
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
