@@ -7,7 +7,7 @@ import shutil
 import io
 
 tmp_dir = "./tmp"
-lexactivator_libs_version = "v3.14.4"
+lexactivator_libs_version = "v3.14.6"
 
 
 class FileInfo(object):
