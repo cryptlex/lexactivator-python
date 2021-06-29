@@ -33,8 +33,12 @@ def main():
     base_url = 'https://dl.cryptlex.com/downloads/'
     base_path = './cryptlex/lexactivator/libs'
 
-    files = [FileInfo('libs/clang/x86_64/libLexActivator.dylib',
-                      base_path + '/macos/x86_64/libLexActivator.dylib')]
+    files = [
+        FileInfo('libs/clang/x86_64/libLexActivator.dylib',
+                      base_path + '/macos/x86_64/libLexActivator.dylib'),
+        FileInfo('libs/clang/arm64/libLexActivator.dylib',
+                      base_path + '/macos/arm64/libLexActivator.dylib')
+    ]
     url = '/LexActivator-Mac.zip'
     download(base_url + lexactivator_libs_version + url, files)
 
