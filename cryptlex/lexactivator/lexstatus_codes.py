@@ -93,6 +93,8 @@ class LexStatusCodes:
 
     LA_E_IP = 82
 
+    LA_E_CONTAINER = 83
+
     LA_E_RATE_LIMIT = 90
 
     LA_E_SERVER = 91
