@@ -126,6 +126,10 @@ SetProductId = library.SetProductId
 SetProductId.argtypes = [CSTRTYPE, c_uint32]
 SetProductId.restype = c_int
 
+SetDataDirectory = library.SetDataDirectory
+SetDataDirectory.argtypes = [CSTRTYPE]
+SetDataDirectory.restype = c_int
+
 SetCustomDeviceFingerprint = library.SetCustomDeviceFingerprint
 SetCustomDeviceFingerprint.argtypes = [CSTRTYPE]
 SetCustomDeviceFingerprint.restype = c_int

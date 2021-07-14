@@ -80,6 +80,29 @@ class LexActivator:
         status = LexActivatorNative.SetProductId(cstring_product_id, flags)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
+
+    @staticmethod
+    def SetDataDirectory(directory_path):
+        """In case you want to change the default directory used by LexActivator to
+        store the activation data on Linux and macOS, this function can be used to
+        set a different directory.
+
+        If you decide to use this function, then it must be called on every start of
+        your program before calling SetProductFile() or SetProductData() function.
+
+        Please ensure that the directory exists and your app has read and write
+        permissions in the directory.
+
+        Args:
+                directory_path (str): absolute path of the directory.
+
+        Raises:
+                LexActivatorException
+        """
+        cstring = LexActivatorNative.get_ctype_string(directory_path)
+        status = LexActivatorNative.SetDataDirectory(cstring)
+        if LexStatusCodes.LA_OK != status:
+            raise LexActivatorException(status)
     
     @staticmethod
     def SetCustomDeviceFingerprint(fingerprint):
