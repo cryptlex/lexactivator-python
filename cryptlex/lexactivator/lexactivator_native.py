@@ -176,11 +176,11 @@ GetProductMetadata.restype = c_int
 
 GetProductVersionName = library.GetProductVersionName
 GetProductVersionName.argtypes = [STRTYPE,c_uint32]
-GetProductVersionName.response = c_int
+GetProductVersionName.restype = c_int
 
 GetProductVersionDisplayName = library.GetProductVersionDisplayName
 GetProductVersionDisplayName.argtypes = [STRTYPE,c_uint32]
-GetProductVersionDisplayName.response = c_int
+GetProductVersionDisplayName.restype = c_int
 
 GetProductVersionFeatureFlag library.GetProductVersionFeatureFlag
 GetProductVersionFeatureFlag.argtypes = [CSTRTYPE, POINTER(c_uint32), STRTYPE, c_uint32]

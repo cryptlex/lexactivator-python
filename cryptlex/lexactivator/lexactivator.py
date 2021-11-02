@@ -390,7 +390,7 @@ class LexActivator:
         buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
         status = LexActivatorNative.GetProductVersionFeatureFlag(cstring_name, ctypes.byref(enabled), buffer, buffer_size)
         if status == LexStatusCodes.LA_OK:
-            return ProductVersionFeatureFlag(name, enabled.value, buffer.value)
+            return ProductVersionFeatureFlag(name, enabled > 0, buffer.value)
         else:
             raise LexActivatorException(status)
 
