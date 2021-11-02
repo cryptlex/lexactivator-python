@@ -19,6 +19,12 @@ class LicenseMeterAttribute(object):
         self.total_uses = total_uses
         self.gross_uses = gross_uses
 
+class ProductVersionFeatureFlag(object):
+    def __init__(self, name, enabled, data):
+        self.name = name
+        self.enabled = enabled
+        self.data = data
+
 
 class LexActivator:
     @staticmethod
@@ -328,6 +334,65 @@ class LexActivator:
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
         return LexActivatorNative.byte_to_string(buffer.value)
+
+    @staticmethod
+    def GetProductVersionName():
+        """Gets the product version name.
+
+        Raises:
+                LexActivatorException
+        
+        Returns:
+                str: name of the product version.
+        """
+
+        buffer_size = 256
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetProductVersionName(buffer,buffer_size)
+        if status != LexStatusCodes.LA_OK:
+            raise LexActivatorException(status)
+        return LexActivatorNative.byte_to_string(buffer.value)
+
+    @staticmethod
+    def GetProductVersionDisplayName():
+        """Gets the product version display name.
+
+        Raises:
+                LexActivatorException
+        
+        Returns:
+                str: display name of the product version.
+        """
+
+        buffer_size = 256
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetProductVersionDisplayName(buffer,buffer_size)
+        if status != LexStatusCodes.LA_OK:
+            raise LexActivatorException(status)
+        return LexActivatorNative.byte_to_string(buffer.value)
+
+    @staticmethod
+    def GetProductVersionFeatureFlag(name):
+        """Gets the product version feature flag.
+
+        Args:
+                name (str): name of the feature flag
+                
+        Raises:
+                LexActivatorException
+
+        Returns:
+                ProductVersionFeatureFlag: product version feature flag 
+        """
+        cstring_name = LexActivatorNative.get_ctype_string(name)
+        enabled = ctypes.c_uint()
+        buffer_size = 256
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetProductVersionFeatureFlag(cstring_name, ctypes.byref(enabled), buffer, buffer_size)
+        if status == LexStatusCodes.LA_OK:
+            return ProductVersionFeatureFlag(name, enabled > 0, buffer.value)
+        else:
+            raise LexActivatorException(status)
 
     @staticmethod
     def GetLicenseMetadata(key):

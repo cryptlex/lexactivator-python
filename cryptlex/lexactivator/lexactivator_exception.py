@@ -80,6 +80,10 @@ class LexActivatorException(Exception):
             return 'The meter attribute has reached it\'s usage limit.'
         if code == LexStatusCodes.LA_E_CUSTOM_FINGERPRINT_LENGTH:
             return 'Custom device fingerprint length is less than 64 characters or more than 256 characters.'
+        if code == LexStatusCodes.LA_E_PRODUCT_VERSION_NOT_LINKED:
+            return 'No product version is linked with the license.'
+        if code == LexStatusCodes.LA_E_FEATURE_FLAG_NOT_FOUND:
+            return 'The product version feature flag does not exist.'
         if code == LexStatusCodes.LA_E_VM:
             return 'Application is being run inside a virtual machine / hypervisor, and activation has been disallowed in the VM.'
         if code == LexStatusCodes.LA_E_COUNTRY:
