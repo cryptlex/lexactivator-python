@@ -158,6 +158,10 @@ SetAppVersion = library.SetAppVersion
 SetAppVersion.argtypes = [CSTRTYPE]
 SetAppVersion.restype = c_int
 
+SetActivationLeaseDuration = library.SetActivationLeaseDuration
+SetActivationLeaseDuration.argtypes = [c_uint32]
+SetActivationLeaseDuration.restype = c_int
+
 SetOfflineActivationRequestMeterAttributeUses = library.SetOfflineActivationRequestMeterAttributeUses
 SetOfflineActivationRequestMeterAttributeUses.argtypes = [CSTRTYPE, c_uint32]
 SetOfflineActivationRequestMeterAttributeUses.restype = c_int
