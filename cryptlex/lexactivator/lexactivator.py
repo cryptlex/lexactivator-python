@@ -194,6 +194,23 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
+    def SetActivationLeaseDuration(lease_duration):
+        """Sets the lease duration for the activation.
+
+        The activation lease duration is honoured when the allow client
+        lease duration property is enabled.
+
+        Args:
+                lease_duration(int): value of the lease duration.
+        
+        Raises:
+                LexActivatorException
+        """
+        status = LexActivatorNative.SetActivationLeaseDuration(lease_duration)
+        if LexStatusCodes.LA_OK != status:
+            raise LexActivatorException(status)
+
+    @staticmethod
     def SetActivationMetadata(key, value):
         """Sets the activation metadata.
 
@@ -253,7 +270,7 @@ class LexActivator:
         status = LexActivatorNative.SetAppVersion(cstring_app_version)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
-
+            
     @staticmethod
     def SetOfflineActivationRequestMeterAttributeUses(name, uses):
         """Sets the meter attribute uses for the offline activation request.

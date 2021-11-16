@@ -146,6 +146,10 @@ SetLicenseCallback = library.SetLicenseCallback
 SetLicenseCallback.argtypes = [CallbackType]
 SetLicenseCallback.restype = c_int
 
+SetActivationLeaseDuration = library.SetActivationLeaseDuration
+SetActivationLeaseDuration.argtypes = [c_uint32]
+SetActivationLeaseDuration.restype = c_int
+
 SetActivationMetadata = library.SetActivationMetadata
 SetActivationMetadata.argtypes = [CSTRTYPE, CSTRTYPE]
 SetActivationMetadata.restype = c_int
