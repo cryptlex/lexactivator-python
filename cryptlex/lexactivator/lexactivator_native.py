@@ -162,6 +162,10 @@ SetAppVersion = library.SetAppVersion
 SetAppVersion.argtypes = [CSTRTYPE]
 SetAppVersion.restype = c_int
 
+SetReleaseVersion = library.SetReleaseVersion
+SetReleaseVersion.argtypes = [CSTRTYPE]
+SetReleaseVersion.restype = c_int
+
 SetOfflineActivationRequestMeterAttributeUses = library.SetOfflineActivationRequestMeterAttributeUses
 SetOfflineActivationRequestMeterAttributeUses.argtypes = [CSTRTYPE, c_uint32]
 SetOfflineActivationRequestMeterAttributeUses.restype = c_int
@@ -214,6 +218,10 @@ GetLicenseExpiryDate = library.GetLicenseExpiryDate
 GetLicenseExpiryDate.argtypes = [POINTER(c_uint32)]
 GetLicenseExpiryDate.restype = c_int
 
+GetLicenseMaintenanceExpiryDate = library.GetLicenseMaintenanceExpiryDate
+GetLicenseMaintenanceExpiryDate.argtypes = [POINTER(c_uint32)]
+GetLicenseMaintenanceExpiryDate.restype = c_int
+
 GetLicenseUserEmail = library.GetLicenseUserEmail
 GetLicenseUserEmail.argtypes = [STRTYPE, c_uint32]
 GetLicenseUserEmail.restype = c_int
@@ -237,6 +245,10 @@ GetLicenseType.restype = c_int
 GetActivationMetadata = library.GetActivationMetadata
 GetActivationMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetActivationMetadata.restype = c_int
+
+GetActivationMode = library.GetActivationMode
+GetActivationMode.argtypes = [STRTYPE, c_uint32, STRTYPE, c_uint32]
+GetActivationMode.restype = c_int
 
 GetActivationMeterAttributeUses = library.GetActivationMeterAttributeUses
 GetActivationMeterAttributeUses.argtypes = [CSTRTYPE, POINTER(c_uint32)]
