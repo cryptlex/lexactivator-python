@@ -25,6 +25,10 @@ class ProductVersionFeatureFlag(object):
         self.enabled = enabled
         self.data = data
 
+class ActivationMode(object):
+    def __init__(self, initialMode, currentMode):
+        self.initialMode = initialMode
+        self.currentMode = currentMode
 
 class LexActivator:
     @staticmethod
@@ -270,7 +274,24 @@ class LexActivator:
         status = LexActivatorNative.SetAppVersion(cstring_app_version)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
-            
+
+    @staticmethod
+    def SetReleaseVersion(release_version):
+        """Sets the current release version of your application.
+
+        The release version appears along with the activation details in dashboard.
+
+        Args:
+                release_version (str): string in following allowed formats: x.x, x.x.x, x.x.x.x
+
+        Raises:
+                LexActivatorException
+        """
+        cstring_release_version = LexActivatorNative.get_ctype_string(release_version)
+        status = LexActivatorNative.SetReleaseVersion(cstring_release_version)
+        if LexStatusCodes.LA_OK != status:
+            raise LexActivatorException(status)
+
     @staticmethod
     def SetOfflineActivationRequestMeterAttributeUses(name, uses):
         """Sets the meter attribute uses for the offline activation request.
@@ -536,6 +557,26 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
+    def GetLicenseMaintenanceExpiryDate():
+        """Gets the license maintenance expiry date timestamp.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: the timestamp
+        """
+        maintenance_expiry_date = ctypes.c_uint()
+        status = LexActivatorNative.GetLicenseMaintenanceExpiryDate(
+            ctypes.byref(maintenance_expiry_date))
+        if status == LexStatusCodes.LA_OK:
+            return maintenance_expiry_date.value
+        elif status == LexStatusCodes.LA_FAIL:
+            return 0
+        else:
+            raise LexActivatorException(status)
+
+    @staticmethod
     def GetLicenseUserEmail():
         """Gets the email associated with license user.
 
@@ -647,6 +688,25 @@ class LexActivator:
             raise LexActivatorException(status)
         return LexActivatorNative.byte_to_string(buffer.value)
 
+    @staticmethod
+    def GetActivationMode():
+        """Gets the initial and current mode of activation (online or offline).
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                ActivationMode: mode of activation.
+        """
+        buffer_size = 256
+        buffer1 = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        buffer2 = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivator.GetActivationMode(buffer1, buffer_size, buffer2, buffer_size)
+        if status == LexStatusCodes.LA_OK:
+            return ActivationMode(LexActivatorNative.byte_to_string(buffer1.value), LexActivatorNative.byte_to_string(buffer2.value))
+        else:
+            raise LexActivatorException(status)
+            
     @staticmethod
     def GetActivationMeterAttributeUses(name):
         """Gets the meter attribute uses consumed by the activation.

@@ -91,6 +91,8 @@ class LexStatusCodes:
 
     LA_E_FEATURE_FLAG_NOT_FOUND = 76
 
+    LA_E_RELEASE_VERSION_NOT_ALLOWED = 77
+
     LA_E_VM = 80
 
     LA_E_COUNTRY = 81
