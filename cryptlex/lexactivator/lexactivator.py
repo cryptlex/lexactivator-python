@@ -699,11 +699,11 @@ class LexActivator:
                 ActivationMode: mode of activation.
         """
         buffer_size = 256
-        buffer1 = LexActivatorNative.get_ctype_string_buffer(buffer_size)
-        buffer2 = LexActivatorNative.get_ctype_string_buffer(buffer_size)
-        status = LexActivator.GetActivationMode(buffer1, buffer_size, buffer2, buffer_size)
+        initialModeBuffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        currentModeBuffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetActivationMode(initialModeBuffer, buffer_size, currentModeBuffer, buffer_size)
         if status == LexStatusCodes.LA_OK:
-            return ActivationMode(LexActivatorNative.byte_to_string(buffer1.value), LexActivatorNative.byte_to_string(buffer2.value))
+            return ActivationMode(LexActivatorNative.byte_to_string(initialModeBuffer.value), LexActivatorNative.byte_to_string(currentModeBuffer.value))
         else:
             raise LexActivatorException(status)
             
