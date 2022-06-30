@@ -365,7 +365,7 @@ class LexActivator:
                 str: value of metadata for the key
         """
         cstring_key = LexActivatorNative.get_ctype_string(key)
-        buffer_size = 256
+        buffer_size = 4096
         buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
         status = LexActivatorNative.GetProductMetadata(
             cstring_key, buffer, buffer_size)
@@ -424,7 +424,7 @@ class LexActivator:
         """
         cstring_name = LexActivatorNative.get_ctype_string(name)
         enabled = ctypes.c_uint()
-        buffer_size = 256
+        buffer_size = 4096
         buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
         status = LexActivatorNative.GetProductVersionFeatureFlag(cstring_name, ctypes.byref(enabled), buffer, buffer_size)
         if status == LexStatusCodes.LA_OK:
@@ -447,7 +447,7 @@ class LexActivator:
                 str: value of metadata for the key
         """
         cstring_key = LexActivatorNative.get_ctype_string(key)
-        buffer_size = 256
+        buffer_size = 4096
         buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
         status = LexActivatorNative.GetLicenseMetadata(
             cstring_key, buffer, buffer_size)
@@ -641,7 +641,7 @@ class LexActivator:
                 str: value of metadata for the key
         """
         cstring_key = LexActivatorNative.get_ctype_string(key)
-        buffer_size = 256
+        buffer_size = 4096
         buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
         status = LexActivatorNative.GetLicenseUserMetadata(
             cstring_key, buffer, buffer_size)
@@ -680,7 +680,7 @@ class LexActivator:
                 str: value of metadata for the key
         """
         cstring_key = LexActivatorNative.get_ctype_string(key)
-        buffer_size = 256
+        buffer_size = 4096
         buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
         status = LexActivatorNative.GetActivationMetadata(
             cstring_key, buffer, buffer_size)
@@ -763,7 +763,7 @@ class LexActivator:
                 str: value of metadata for the key
         """
         cstring_key = LexActivatorNative.get_ctype_string(key)
-        buffer_size = 256
+        buffer_size = 4096
         buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
         status = LexActivatorNative.GetTrialActivationMetadata(
             cstring_key, buffer, buffer_size)
