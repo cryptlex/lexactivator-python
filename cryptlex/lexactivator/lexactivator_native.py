@@ -166,6 +166,18 @@ SetReleaseVersion = library.SetReleaseVersion
 SetReleaseVersion.argtypes = [CSTRTYPE]
 SetReleaseVersion.restype = c_int
 
+SetReleasePublishedDate = library.SetReleasePublishedDate
+SetReleasePublishedDate.argtypes = [c_uint32]
+SetReleasePublishedDate.restype = c_int
+
+SetReleasePlatform = library.SetReleasePlatform
+SetReleasePlatform.argtypes = [CSTRTYPE]
+SetReleasePlatform.restype = c_int
+
+SetReleaseChannel = library.SetReleaseChannel
+SetReleaseChannel.argtypes = [CSTRTYPE]
+SetReleaseChannel.restype = c_int
+
 SetOfflineActivationRequestMeterAttributeUses = library.SetOfflineActivationRequestMeterAttributeUses
 SetOfflineActivationRequestMeterAttributeUses.argtypes = [CSTRTYPE, c_uint32]
 SetOfflineActivationRequestMeterAttributeUses.restype = c_int
@@ -221,6 +233,10 @@ GetLicenseExpiryDate.restype = c_int
 GetLicenseMaintenanceExpiryDate = library.GetLicenseMaintenanceExpiryDate
 GetLicenseMaintenanceExpiryDate.argtypes = [POINTER(c_uint32)]
 GetLicenseMaintenanceExpiryDate.restype = c_int
+
+GetLicenseMaxAllowedReleaseVersion = library.GetLicenseMaxAllowedReleaseVersion
+GetLicenseMaxAllowedReleaseVersion.argtypes = [STRTYPE, c_uint32]
+GetLicenseMaxAllowedReleaseVersion.restype = c_int
 
 GetLicenseUserEmail = library.GetLicenseUserEmail
 GetLicenseUserEmail.argtypes = [STRTYPE, c_uint32]

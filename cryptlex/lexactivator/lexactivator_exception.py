@@ -86,6 +86,10 @@ class LexActivatorException(Exception):
             return 'The product version feature flag does not exist.'
         if code == LexStatusCodes.LA_E_RELEASE_VERSION_NOT_ALLOWED:
             return 'The release version is not allowed.'
+        if code == LexStatusCodes.LA_E_RELEASE_PLATFORM_LENGTH:
+            return 'Release platform length is more than 256 characters.'
+        if code == LexStatusCodes.LA_E_RELEASE_CHANNEL_LENGTH:
+            return 'Release channel length is more than 256 characters.'
         if code == LexStatusCodes.LA_E_VM:
             return 'Application is being run inside a virtual machine / hypervisor, and activation has been disallowed in the VM.'
         if code == LexStatusCodes.LA_E_COUNTRY:
