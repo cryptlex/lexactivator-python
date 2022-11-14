@@ -293,6 +293,54 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
+    def SetReleasePublishedDate(release_published_date):
+        """Sets the release published date of your application.
+
+        Args:
+                release_published_date (int): unix timestamp of release published date.
+
+        Raises:
+                LexActivatorException
+        """
+        status = LexActivatorNative.SetReleasePublishedDate(release_published_date)
+        if LexStatusCodes.LA_OK != status:
+            raise LexActivatorException(status)
+
+    @staticmethod
+    def SetReleasePlatform(release_platform):
+        """Sets the release platform e.g. windows, macos, linux
+
+        The release platform appears along with the activation details in dashboard.
+
+        Args:
+                release_platform (str): release platform e.g. windows, macos, linux
+        
+        Raises:
+                LexActivatorException
+        """
+        cstring_release_platform = LexActivatorNative.get_ctype_string(release_platform)
+        status = LexActivatorNative.SetReleasePlatform(cstring_release_platform)
+        if LexStatusCodes.LA_OK != status:
+            raise LexActivatorException(status)
+
+    @staticmethod
+    def SetReleaseChannel(release_channel):
+        """Sets the release channel e.g. stable, beta
+
+        The release channel appears along with the activation details in dashboard.
+
+        Args:
+                release_channel (str): release channel e.g. stable
+        
+        Raises:
+                LexActivatorException
+        """
+        cstring_release_channel = LexActivatorNative.get_ctype_string(release_channel)
+        status = LexActivatorNative.SetReleaseChannel(cstring_release_channel)
+        if LexStatusCodes.LA_OK != status:
+            raise LexActivatorException(status)
+
+    @staticmethod
     def SetOfflineActivationRequestMeterAttributeUses(name, uses):
         """Sets the meter attribute uses for the offline activation request.
 
@@ -575,6 +623,23 @@ class LexActivator:
             return 0
         else:
             raise LexActivatorException(status)
+
+    @staticmethod
+    def GetLicenseMaxAllowedReleaseVersion():
+        """Gets the maximum allowed release version of the license.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                str: max allowed release version
+        """
+        buffer_size = 256
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetLicenseMaxAllowedReleaseVersion(buffer, buffer_size)
+        if status != LexStatusCodes.LA_OK:
+            raise LexActivatorException(status)
+        return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
     def GetLicenseUserEmail():
