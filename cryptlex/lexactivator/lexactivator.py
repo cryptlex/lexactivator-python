@@ -115,6 +115,25 @@ class LexActivator:
             raise LexActivatorException(status)
     
     @staticmethod
+    def SetDebugMode(enable):
+        """Enables network logs.
+
+        This function should be used for network testing only in case of network errors.
+
+        By default logging is disabled.
+
+        Args:
+                enable (int): 0 or 1 to disable or enable logging.
+
+        Raises:
+                LexActivatorException
+        """
+
+        status = LexActivatorNative.SetDebugMode(enable)
+        if LexStatusCodes.LA_OK != status:
+            raise LexActivatorException(status)
+
+    @staticmethod
     def SetCustomDeviceFingerprint(fingerprint):
         """In case you don't want to use the LexActivator's advanced
         device fingerprinting algorithm, this function can be used to set a custom
