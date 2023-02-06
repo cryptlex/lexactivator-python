@@ -1,1 +1,1 @@
-from cryptlex.lexactivator.lexactivator import LexActivator, LexStatusCodes, PermissionFlags, LexActivatorException
+from cryptlex.lexactivator.lexactivator import LexActivator, LexStatusCodes, PermissionFlags, ReleaseFlags, LexActivatorException
