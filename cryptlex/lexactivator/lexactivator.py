@@ -11,6 +11,9 @@ class PermissionFlags:
     LA_SYSTEM = 2
     LA_IN_MEMORY = 4
 
+class ReleaseFlags:
+    LA_RELEASES_ALL = 1
+    LA_RELEASES_ALLOWED = 2
 
 class LicenseMeterAttribute(object):
     def __init__(self, name, allowed_uses, total_uses, gross_uses):
@@ -953,6 +956,38 @@ class LexActivator:
         callback_list.append(release_callback_fn)
         status = LexActivatorNative.CheckForReleaseUpdate(
             cstring_platform, cstring_version, cstring_channel, release_callback_fn)
+        if LexStatusCodes.LA_OK != status:
+            raise LexActivatorException(status)
+
+    @staticmethod
+    def CheckReleaseUpdate(release_callback, releaseFlag):
+        """Checks whether a new release is available for the product.
+
+        This function should only be used if you manage your releases through
+        Cryptlex release management API.
+
+        When this function is called the release update callback function gets invoked 
+        which returns the following parameters:
+
+        * status - determines if any update is available or not. It also determines whether 
+        an update is allowed or not. Expected values are LA_RELEASE_UPDATE_AVAILABLE,
+        LA_RELEASE_UPDATE_NOT_AVAILABLE, LA_RELEASE_UPDATE_AVAILABLE_NOT_ALLOWED.
+
+        * releaseJson- returns json string of the latest available release, depending on the 
+        flag LA_RELEASES_ALLOWED or LA_RELEASES_ALL passed to the CheckReleaseUpdate().
+
+        Args:
+                releaseUpdateCallback (Callable[int, str]]): callback function.
+                releaseFlags (str): If an update only related to the allowed release is required, 
+                then use LA_RELEASES_ALLOWED. Otherwise, if an update for all the releases is
+                required, then use LA_RELEASES_ALL.
+
+        Raises:
+                LexActivatorException
+        """
+        release_callback_fn = LexActivatorNative.ReleaseCallbackType(release_callback)
+        callback_list.append(release_callback_fn)
+        status = LexActivatorNative.CheckReleaseUpdate(release_callback_fn, releaseFlag)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
 

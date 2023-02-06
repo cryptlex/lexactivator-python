@@ -98,6 +98,12 @@ class LexActivatorException(Exception):
             return 'IP address is not allowed.'
         if code == LexStatusCodes.LA_E_CONTAINER:
             return 'Application is being run inside a container and activation has been disallowed in the container.'
+        if code == LexStatusCodes.LA_E_RELEASE_VERSION:
+            return 'Invalid release version. Make sure the release version uses the following formats: x.x, x.x.x, x.x.x.x (where x is a number).'
+        if code == LexStatusCodes.LA_E_RELEASE_PLATFORM:
+            return 'Release platform not set.'
+        if code == LexStatusCodes.LA_E_RELEASE_CHANNEL:
+            return 'Release channel not set.'
         if code == LexStatusCodes.LA_E_RATE_LIMIT:
             return 'Rate limit for API has reached, try again later.'
         if code == LexStatusCodes.LA_E_SERVER:

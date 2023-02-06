@@ -112,6 +112,7 @@ CSTRTYPE = get_char_type()
 STRTYPE = get_char_type()
 
 CallbackType = CFUNCTYPE(UNCHECKED(None), c_uint32)
+ReleaseCallbackType = CFUNCTYPE(UNCHECKED(None), c_int, CSTRTYPE)
 
 
 SetProductFile = library.SetProductFile
@@ -301,6 +302,10 @@ GetLibraryVersion.restype = c_int
 CheckForReleaseUpdate = library.CheckForReleaseUpdate
 CheckForReleaseUpdate.argtypes = [CSTRTYPE, CSTRTYPE, CSTRTYPE, CallbackType]
 CheckForReleaseUpdate.restype = c_int
+
+CheckReleaseUpdate = library.CheckReleaseUpdate
+CheckReleaseUpdate.argtypes = [ReleaseCallbackType, c_uint32]
+CheckReleaseUpdate.restype = c_int
 
 ActivateLicense = library.ActivateLicense
 ActivateLicense.argtypes = []
