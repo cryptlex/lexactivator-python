@@ -9,7 +9,7 @@ def init():
     LexActivator.SetProductData("PASTE_CONTENT_OF_PRODUCT.DAT_FILE")
     LexActivator.SetProductId(
         "PASTE_PRODUCT_ID", PermissionFlags.LA_USER)
-    LexActivator.SetAppVersion("PASTE_YOUR_APP_VERION")
+    LexActivator.SetReleaseVersion("PASTE_YOUR_RELEASE_VERSION")
 
 # License callback is invoked when IsLicenseGenuine() completes a server sync
 
