@@ -1,4 +1,5 @@
 import ctypes
+import json
 from cryptlex.lexactivator import lexactivator_native as LexActivatorNative
 from cryptlex.lexactivator.lexstatus_codes import LexStatusCodes
 from cryptlex.lexactivator.lexactivator_exception import LexActivatorException
@@ -29,6 +30,15 @@ class ActivationMode(object):
     def __init__(self, initialMode, currentMode):
         self.initialMode = initialMode
         self.currentMode = currentMode
+
+class OrganizationAddress(object):
+    def __init__(self, address_line1='', address_line2='', city='', state='', country='', postal_code=''):
+        self.address_line1 = address_line1
+        self.address_line2 = address_line2
+        self.city = city
+        self.state = state
+        self.country = country
+        self.postal_code = postal_code
 
 class LexActivator:
     @staticmethod
@@ -732,6 +742,46 @@ class LexActivator:
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
         return LexActivatorNative.byte_to_string(buffer.value)
+
+    @staticmethod
+    def GetLicenseOrganizationName();
+        """Gets the name associated with the license organization.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                str: the license organization name
+        """
+        buffer_size = 256
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetLicenseOrganizationName(buffer, buffer_size)
+        if status != LexStatusCodes.LA_OK:
+            raise LexActivatorException(status)
+        return LexActivatorNative.byte_to_string(buffer.value)
+
+    @staticmethod
+    def GetLicenseOrganizationAddress();
+        """Gets the address associated with the license organization.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                OrganizationAddress: the license organization address
+        """
+        buffer_size = 256
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetLicenseOrganizationAddress(buffer, buffer_size)
+        if status == LexStatusCodes.LA_OK:
+            json_address = LexActivatorNative.byte_to_string(buffer.value)
+            if not my_string.strip():
+                return OrganizationAddress()
+            else:
+                address = json.loads(json_address)
+                return OrganizationAddress(address["address_line1"], address["address_line2"], address["city"], address["state"], address["country"], address["postal_code"])
+        else:
+            raise LexActivatorException(status)
 
     @staticmethod
     def GetLicenseType():
