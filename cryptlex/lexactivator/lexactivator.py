@@ -32,7 +32,7 @@ class ActivationMode(object):
         self.currentMode = currentMode
 
 class OrganizationAddress(object):
-    def __init__(self, address_line1='', address_line2='', city='', state='', country='', postal_code=''):
+    def __init__(self, address_line1, address_line2, city, state, country, postal_code):
         self.address_line1 = address_line1
         self.address_line2 = address_line2
         self.city = city
@@ -744,7 +744,7 @@ class LexActivator:
         return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
-    def GetLicenseOrganizationName();
+    def GetLicenseOrganizationName():
         """Gets the name associated with the license organization.
 
         Raises:
@@ -761,7 +761,7 @@ class LexActivator:
         return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
-    def GetLicenseOrganizationAddress();
+    def GetLicenseOrganizationAddress():
         """Gets the address associated with the license organization.
 
         Raises:
@@ -775,11 +775,11 @@ class LexActivator:
         status = LexActivatorNative.GetLicenseOrganizationAddress(buffer, buffer_size)
         if status == LexStatusCodes.LA_OK:
             json_address = LexActivatorNative.byte_to_string(buffer.value)
-            if not my_string.strip():
-                return OrganizationAddress()
+            if not json_address.strip():
+                return None
             else:
                 address = json.loads(json_address)
-                return OrganizationAddress(address["address_line1"], address["address_line2"], address["city"], address["state"], address["country"], address["postal_code"])
+                return OrganizationAddress(address["addressLine1"], address["addressLine2"], address["city"], address["state"], address["country"], address["postalCode"])
         else:
             raise LexActivatorException(status)
 
