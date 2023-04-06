@@ -2,6 +2,7 @@ import ctypes
 from cryptlex.lexactivator import lexactivator_native as LexActivatorNative
 from cryptlex.lexactivator.lexstatus_codes import LexStatusCodes
 from cryptlex.lexactivator.lexactivator_exception import LexActivatorException
+from cryptlex.lexactivator.lexrelease import Release
 
 callback_list = []
 
@@ -960,34 +961,40 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
-    def CheckReleaseUpdate(release_callback, releaseFlag):
+    def CheckReleaseUpdate(release_callback, release_flags):
         """Checks whether a new release is available for the product.
 
         This function should only be used if you manage your releases through
         Cryptlex release management API.
 
         When this function is called the release update callback function gets invoked 
-        which returns the following parameters:
+        which passes the following parameters:
 
         * status - determines if any update is available or not. It also determines whether 
         an update is allowed or not. Expected values are LA_RELEASE_UPDATE_AVAILABLE,
         LA_RELEASE_UPDATE_NOT_AVAILABLE, LA_RELEASE_UPDATE_AVAILABLE_NOT_ALLOWED.
 
-        * releaseJson- returns json string of the latest available release, depending on the 
+        * release - latest available release object, depending on the 
         flag LA_RELEASES_ALLOWED or LA_RELEASES_ALL passed to the CheckReleaseUpdate().
 
         Args:
-                releaseUpdateCallback (Callable[int, str]]): callback function.
-                releaseFlags (str): If an update only related to the allowed release is required, 
+                release_callback (Callable[int, Release]): callback function.
+                release_flags (str): If an update only related to the allowed release is required, 
                 then use LA_RELEASES_ALLOWED. Otherwise, if an update for all the releases is
                 required, then use LA_RELEASES_ALL.
 
         Raises:
                 LexActivatorException
         """
-        release_callback_fn = LexActivatorNative.ReleaseCallbackType(release_callback)
-        callback_list.append(release_callback_fn)
-        status = LexActivatorNative.CheckReleaseUpdate(release_callback_fn, releaseFlag)
+        def internal_callback(status, release_json):
+                release_obj = None
+                if release_json:
+                    release_dict = json.loads(release_json)
+                    release_obj = Release(release_dict)
+                release_callback(status, release_obj)        
+        internal_release_callback_fn = LexActivatorNative.ReleaseCallbackType(internal_callback)
+        callback_list.append(internal_release_callback_fn)
+        status = LexActivatorNative.CheckReleaseUpdate(internal_release_callback_fn, release_flags)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
 

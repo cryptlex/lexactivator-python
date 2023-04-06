@@ -303,7 +303,7 @@ CheckForReleaseUpdate = library.CheckForReleaseUpdate
 CheckForReleaseUpdate.argtypes = [CSTRTYPE, CSTRTYPE, CSTRTYPE, CallbackType]
 CheckForReleaseUpdate.restype = c_int
 
-CheckReleaseUpdate = library.CheckReleaseUpdate
+CheckReleaseUpdate = library.CheckReleaseUpdateInternal
 CheckReleaseUpdate.argtypes = [ReleaseCallbackType, c_uint32]
 CheckReleaseUpdate.restype = c_int
 
