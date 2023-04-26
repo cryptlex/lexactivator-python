@@ -1043,7 +1043,7 @@ class LexActivator:
         Raises:
                 LexActivatorException
         """
-        def internal_callback(status, release_json, _unused):
+        def internal_callback(status, release_json, _user_data):
                 release_obj = None
                 if release_json:
                     release_dict = json.loads(release_json)
