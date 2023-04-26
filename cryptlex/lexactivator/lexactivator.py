@@ -1011,7 +1011,7 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
-    def CheckReleaseUpdate(release_callback, release_flags):
+    def CheckReleaseUpdate(release_update_callback, release_flags, user_data):
         """Checks whether a new release is available for the product.
 
         This function should only be used if you manage your releases through
@@ -1027,24 +1027,31 @@ class LexActivator:
         * release - latest available release object, depending on the 
         flag LA_RELEASES_ALLOWED or LA_RELEASES_ALL passed to the CheckReleaseUpdate().
 
+        * user_data - data that is passed to the callback function when it is registered
+	using the CheckReleaseUpdate function. This parameter is optional and can be None if no user data
+	is passed to the CheckReleaseUpdate function.
+
         Args:
-                release_callback (Callable[int, Release]): callback function.
-                release_flags (str): If an update only related to the allowed release is required, 
+                release_update_callback (Callable[int, Release, Any]): callback function.
+                release_flags (str): if an update only related to the allowed release is required, 
                 then use LA_RELEASES_ALLOWED. Otherwise, if an update for all the releases is
                 required, then use LA_RELEASES_ALL.
+                user_data (Any): data that can be passed to the callback function. This parameter has 
+	        to be None if no user data needs to be passed to the callback.
+
 
         Raises:
                 LexActivatorException
         """
-        def internal_callback(status, release_json):
+        def internal_callback(status, release_json, _unused):
                 release_obj = None
                 if release_json:
                     release_dict = json.loads(release_json)
                     release_obj = Release(release_dict)
-                release_callback(status, release_obj)        
-        internal_release_callback_fn = LexActivatorNative.ReleaseCallbackType(internal_callback)
+                release_update_callback(status, release_obj, user_data)        
+        internal_release_callback_fn = LexActivatorNative.ReleaseUpdateCallbackType(internal_callback)
         callback_list.append(internal_release_callback_fn)
-        status = LexActivatorNative.CheckReleaseUpdate(internal_release_callback_fn, release_flags)
+        status = LexActivatorNative.CheckReleaseUpdate(internal_release_callback_fn, release_flags, None)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
 
