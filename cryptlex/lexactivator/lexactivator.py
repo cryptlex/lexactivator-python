@@ -774,7 +774,7 @@ class LexActivator:
         Returns:
                 OrganizationAddress: the license organization address
         """
-        buffer_size = 256
+        buffer_size = 1024
         buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
         status = LexActivatorNative.GetLicenseOrganizationAddress(buffer, buffer_size)
         if status == LexStatusCodes.LA_OK:
