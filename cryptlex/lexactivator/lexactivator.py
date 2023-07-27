@@ -618,6 +618,46 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
+    def GetLicenseCreationDate():
+        """Gets the license creation date timestamp.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: the timestamp
+        """
+        creation_date = ctypes.c_uint()
+        status = LexActivatorNative.GetLicenseCreationDate(
+            ctypes.byref(creation_date))
+        if status == LexStatusCodes.LA_OK:
+            return creation_date.value
+        elif status == LexStatusCodes.LA_FAIL:
+            return 0
+        else:
+            raise LexActivatorException(status)
+
+    @staticmethod
+    def GetLicenseActivationDate():
+        """Gets the license activation date timestamp.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: the timestamp
+        """
+        activation_date = ctypes.c_uint()
+        status = LexActivatorNative.GetLicenseActivationDate(
+            ctypes.byref(activation_date))
+        if status == LexStatusCodes.LA_OK:
+            return activation_date.value
+        elif status == LexStatusCodes.LA_FAIL:
+            return 0
+        else:
+            raise LexActivatorException(status)
+
+    @staticmethod
     def GetLicenseExpiryDate():
         """Gets the license expiry date timestamp.
 
