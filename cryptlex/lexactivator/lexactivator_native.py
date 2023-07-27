@@ -267,6 +267,10 @@ GetLicenseOrganizationAddress = library.GetLicenseOrganizationAddressInternal
 GetLicenseOrganizationAddress.argtypes = [STRTYPE, c_uint32]
 GetLicenseOrganizationAddress.restype = c_int
 
+GetUserLicenses = library.GetUserLicensesInternal
+GetUserLicenses.argtypes = [STRTYPE, c_uint32]
+GetUserLicenses.restype = c_int
+
 GetLicenseType = library.GetLicenseType
 GetLicenseType.argtypes = [STRTYPE, c_uint32]
 GetLicenseType.restype = c_int
@@ -314,6 +318,10 @@ CheckForReleaseUpdate.restype = c_int
 CheckReleaseUpdate = library.CheckReleaseUpdateInternal
 CheckReleaseUpdate.argtypes = [ReleaseUpdateCallbackType, c_uint32, c_void_p]
 CheckReleaseUpdate.restype = c_int
+
+AuthenticateUser = library.AuthenticateUser
+AuthenticateUser.argtypes = [CSTRTYPE, CSTRTYPE]
+AuthenticateUser.restype = c_int
 
 ActivateLicense = library.ActivateLicense
 ActivateLicense.argtypes = []
