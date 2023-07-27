@@ -796,7 +796,7 @@ class LexActivator:
 
     @staticmethod
     def GetUserLicenses():
-        """Returns the user licenses for the product.
+        """Gets the user licenses for the product.
 
         This function sends a network request to Cryptlex servers to get the licenses.
 
