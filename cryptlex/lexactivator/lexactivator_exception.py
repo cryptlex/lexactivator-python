@@ -105,7 +105,7 @@ class LexActivatorException(Exception):
         if code == LexStatusCodes.LA_E_RELEASE_CHANNEL:
             return 'Release channel not set.'
         if code == LexStatusCodes.LA_E_USER_NOT_AUTHENTICATED:
-            return 'Permission denied.'
+            return 'The user is not authenticated.'
         if code == LexStatusCodes.LA_E_RATE_LIMIT:
             return 'Rate limit for API has reached, try again later.'
         if code == LexStatusCodes.LA_E_SERVER:
