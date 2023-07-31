@@ -8,8 +8,6 @@ from cryptlex.lexactivator import LexActivator, LexStatusCodes, PermissionFlags,
 def init():
     LexActivator.SetProductData("PASTE_CONTENT_OF_PRODUCT.DAT_FILE")
     LexActivator.SetProductId("PASTE_PRODUCT_ID", PermissionFlags.LA_USER)
-    LexActivator.SetReleasePlatform('RELEASE_PLATFORM') # set the actual platform of the release e.g windows
-    LexActivator.SetReleaseChannel('RELEASE_CHANNEL') # set the actual channel of the release e.g stable
     LexActivator.SetReleaseVersion("1.0.0") # Set this to the release version of your app
 
 # License callback is invoked when IsLicenseGenuine() completes a server sync
