@@ -1,15 +1,14 @@
 import sys
 import time
 
-from cryptlex.lexactivator import LexActivator, LexStatusCodes, PermissionFlags, LexActivatorException
+from cryptlex.lexactivator import LexActivator, LexStatusCodes, PermissionFlags, ReleaseFlags, LexActivatorException
 # from cryptlex.lexactivator import *
 
 
 def init():
     LexActivator.SetProductData("PASTE_CONTENT_OF_PRODUCT.DAT_FILE")
     LexActivator.SetProductId("PASTE_PRODUCT_ID", PermissionFlags.LA_USER)
-    # Set this to the release version of your app
-    LexActivator.SetReleaseVersion("1.0.0")
+    LexActivator.SetReleaseVersion("1.0.0") # Set this to the release version of your app
 
 # License callback is invoked when IsLicenseGenuine() completes a server sync
 
@@ -20,8 +19,18 @@ def licence_callback(status):
 # Software release update callback is invoked when CheckForReleaseUpdate() gets a response from the server
 
 
-def software_release_update_callback(status):
-    print("Release status: ", status)
+def software_release_update_callback(status, release, user_data):
+    try:
+        if status == LexStatusCodes.LA_RELEASE_UPDATE_AVAILABLE:
+            print('Release update available!')
+            print('Release notes: ', release.notes)
+        elif status == LexStatusCodes.LA_RELEASE_UPDATE_AVAILABLE_NOT_ALLOWED:
+            print('Release update available but not allowed!')
+            print('Release notes: ', release.notes)
+        elif status == LexStatusCodes.LA_RELEASE_NO_UPDATE_AVAILABLE:
+            print('No release update available.')
+    except LexActivatorException as exception:
+        print('Error code:', exception.code, exception.message)
 
 
 def activate():
@@ -61,7 +70,7 @@ def main():
             print("License is genuinely activated!")
 
             # print("Checking for software release update...")
-            # LexActivator.CheckForReleaseUpdate("windows", "1.0.0", "stable", software_release_update_callback)
+            # LexActivator.CheckReleaseUpdate(software_release_update_callback, ReleaseFlags.LA_RELEASES_ALL, None)
         elif LexStatusCodes.LA_EXPIRED == status:
             print("License is genuinely activated but has expired!")
         elif LexStatusCodes.LA_SUSPENDED == status:
