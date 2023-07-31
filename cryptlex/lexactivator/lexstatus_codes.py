@@ -115,6 +115,8 @@ class LexStatusCodes:
 
     LA_E_RELEASE_CHANNEL = 86
 
+    LA_E_USER_NOT_AUTHENTICATED = 87
+
     LA_E_RATE_LIMIT = 90
 
     LA_E_SERVER = 91

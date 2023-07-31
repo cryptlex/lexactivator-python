@@ -44,6 +44,13 @@ class OrganizationAddress(object):
         self.country = country
         self.postal_code = postal_code
 
+class UserLicense(object):
+    def __init__(self, user_license):
+        self.allowed_activations = user_license.get("allowedActivations")
+        self.allowed_deactivations = user_license.get("allowedDeactivations")
+        self.key = user_license.get("key")
+        self.type = user_license.get("type")
+
 class LexActivator:
     @staticmethod
     def SetProductFile(file_path):
@@ -828,6 +835,34 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
+    def GetUserLicenses():
+        """Gets the user licenses for the product.
+
+        This function sends a network request to Cryptlex servers to get the licenses.
+
+        Make sure AuthenticateUser() function is called before calling this function.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                UserLicense[]: list of user license objects
+        """
+        buffer_size = 4096
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetUserLicenses(buffer, buffer_size)
+        if status == LexStatusCodes.LA_OK:
+            user_licenses_json = LexActivatorNative.byte_to_string(buffer.value)
+            if not user_licenses_json.strip():
+                return []
+            else:
+                user_licenses = json.loads(user_licenses_json)
+                user_licenses_list = [UserLicense(license_detail) for license_detail in user_licenses]
+                return user_licenses_list
+        else:
+            raise LexActivatorException(status)
+
+    @staticmethod
     def GetLicenseType():
         """Gets the license type.
 
@@ -1093,6 +1128,29 @@ class LexActivator:
         callback_list.append(internal_release_callback_fn)
         status = LexActivatorNative.CheckReleaseUpdate(internal_release_callback_fn, release_flags, None)
         if LexStatusCodes.LA_OK != status:
+            raise LexActivatorException(status)
+
+    @staticmethod
+    def AuthenticateUser(email, password):
+        """It sends the request to the Cryptlex servers to authenticate the user.
+
+        Args:
+                email (str): user email address
+                password (str): user password
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: LA_OK
+        """
+        cstring_email = LexActivatorNative.get_ctype_string(email)
+        cstring_password = LexActivatorNative.get_ctype_string(password)
+        status = LexActivatorNative.AuthenticateUser(
+            cstring_email, cstring_password)
+        if LexStatusCodes.LA_OK == status:
+            return LexStatusCodes.LA_OK
+        else:
             raise LexActivatorException(status)
 
     @staticmethod
