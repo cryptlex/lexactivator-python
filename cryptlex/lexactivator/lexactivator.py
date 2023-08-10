@@ -438,6 +438,21 @@ class LexActivator:
         status = LexActivatorNative.SetCryptlexHost(cstring_host)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
+        
+    @staticmethod
+    def SetTwoFactorAuthenticationCode(two_factor_authentication_code):
+        """Sets the two-factor authentication code for the user authentication.
+
+        Args:
+                twoFactorAuthenticationCode (str): the 2FA code
+
+        Raises:
+                LexActivatorException
+        """
+        cstring_two_factor_authentication_code = LexActivatorNative.get_ctype_string(two_factor_authentication_code)
+        status = LexActivatorNative.SetTwoFactorAuthenticationCode(cstring_two_factor_authentication_code)
+        if LexStatusCodes.LA_OK != status:
+            raise LexActivatorException(status)
 
     @staticmethod
     def GetProductMetadata(key):

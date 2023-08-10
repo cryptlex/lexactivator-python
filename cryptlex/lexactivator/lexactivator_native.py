@@ -195,6 +195,10 @@ SetCryptlexHost = library.SetCryptlexHost
 SetCryptlexHost.argtypes = [CSTRTYPE]
 SetCryptlexHost.restype = c_int
 
+SetTwoFactorAuthenticationCode = library.SetTwoFactorAuthenticationCode
+SetTwoFactorAuthenticationCode.argtypes = [CSTRTYPE]
+SetTwoFactorAuthenticationCode.restype = c_int
+
 GetProductMetadata = library.GetProductMetadata
 GetProductMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetProductMetadata.restype = c_int

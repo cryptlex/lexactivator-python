@@ -106,10 +106,16 @@ class LexActivatorException(Exception):
             return 'Release channel not set.'
         if code == LexStatusCodes.LA_E_USER_NOT_AUTHENTICATED:
             return 'The user is not authenticated.'
+        if code == LexStatusCodes.LA_E_TWO_FACTOR_AUTHENTICATION_CODE_MISSING:
+            return 'The two-factor authentication code for the user authentication is missing.'
+        if code == LexStatusCodes.LA_E_TWO_FACTOR_AUTHENTICATION_CODE_INVALID:
+            return 'The two-factor authentication code provided by the user is invalid.'
         if code == LexStatusCodes.LA_E_RATE_LIMIT:
             return 'Rate limit for API has reached, try again later.'
         if code == LexStatusCodes.LA_E_SERVER:
             return 'Server error.'
         if code == LexStatusCodes.LA_E_CLIENT:
             return 'Client error.'
+        if code == LexStatusCodes.LA_E_LOGIN_TEMPORARILY_LOCKED:
+            return 'The user account has been temporarily locked for 5 mins due to 5 failed attempts.'
         return 'Unknown error!'
