@@ -161,8 +161,8 @@ class LexActivator:
         device fingerprint.
 
         If you decide to use your own custom device fingerprint then this function must be
-        called on every start of your program immediately after calling SetProductFile()
-        or SetProductData() function.
+        called on every start of your program immediately after calling SetProductData()
+        and SetProductId() functions.
 
         The license fingerprint matching strategy is ignored if this function is used.
 
@@ -174,7 +174,7 @@ class LexActivator:
         """
         cstring_fingerprint = LexActivatorNative.get_ctype_string(
             fingerprint)
-        status = LexActivatorNative.SetProductData(cstring_fingerprint)
+        status = LexActivatorNative.SetCustomDeviceFingerprint(cstring_fingerprint)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
 
