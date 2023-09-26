@@ -335,6 +335,10 @@ AuthenticateUser = library.AuthenticateUser
 AuthenticateUser.argtypes = [CSTRTYPE, CSTRTYPE]
 AuthenticateUser.restype = c_int
 
+AuthenticateUserWithIdToken = library.AuthenticateUserWithIdToken
+AuthenticateUserWithIdToken.argtypes = [CSTRTYPE]
+AuthenticateUserWithIdToken.restype = c_int
+
 ActivateLicense = library.ActivateLicense
 ActivateLicense.argtypes = []
 ActivateLicense.restype = c_int

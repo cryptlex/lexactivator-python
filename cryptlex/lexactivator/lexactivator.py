@@ -143,6 +143,9 @@ class LexActivator:
 
         By default logging is disabled.
 
+        This function generates the lexactivator-logs.log file in the same directory
+        where the application is running.
+
         Args:
                 enable (int): 0 or 1 to disable or enable logging.
 
@@ -1163,6 +1166,26 @@ class LexActivator:
         cstring_password = LexActivatorNative.get_ctype_string(password)
         status = LexActivatorNative.AuthenticateUser(
             cstring_email, cstring_password)
+        if LexStatusCodes.LA_OK == status:
+            return LexStatusCodes.LA_OK
+        else:
+            raise LexActivatorException(status)
+        
+    @staticmethod
+    def AuthenticateUserWithIdToken(idToken):
+        """Authenticates the user via OIDC Id token.
+
+        Args:
+                idToken (str): The id token obtained from the OIDC provider.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: LA_OK
+        """
+        cstring_id_token = LexActivatorNative.get_ctype_string(idToken)
+        status = LexActivatorNative.AuthenticateUserWithIdToken(cstring_id_token)
         if LexStatusCodes.LA_OK == status:
             return LexStatusCodes.LA_OK
         else:
