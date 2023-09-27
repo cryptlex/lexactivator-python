@@ -118,7 +118,7 @@ class LexActivatorException(Exception):
             return 'Client error.'
         if code == LexStatusCodes.LA_E_LOGIN_TEMPORARILY_LOCKED:
             return 'The user account has been temporarily locked for 5 mins due to 5 failed attempts.'
-        if code == LexStatusCodes.LA_E_AUTHENTICATION_ID_TOKEN:
+        if code == LexStatusCodes.LA_E_AUTHENTICATION_ID_TOKEN_INVALID:
             return 'Invalid authentication ID token.'
         if code == LexStatusCodes.LA_E_OIDC_SSO_NOT_ENABLED:
             return 'OIDC SSO is not enabled.'
