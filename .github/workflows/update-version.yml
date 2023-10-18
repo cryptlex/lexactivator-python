@@ -1,0 +1,38 @@
+name: Update version
+
+on:
+  workflow_dispatch:
+    inputs:
+      libraryVersion:
+        description: 'Library Version'
+        required: true
+        default: ''
+      packageVersion:
+        description: 'Package Version'
+        required: true
+        default: ''
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Update Package Version
+        run: |
+          sed -i '/version=/!b;c \ \ \ \ version="${{ github.event.inputs.packageVersion }}",' setup.py    
+      
+      - name: Update Library Version
+        run: |
+          sed -i '/lexactivator_libs_version =/!b;clexactivator_libs_version = "v${{ github.event.inputs.libraryVersion }}"' pre-publish.py
+     
+      - name: Commit, Tag and Push
+        run: |
+          git add pre-publish.py
+          git add setup.py
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -m "updated version" | exit 0
+          git tag ${{ github.event.inputs.packageVersion }}
+          git push & git push --tags
