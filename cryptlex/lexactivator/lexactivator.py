@@ -896,6 +896,22 @@ class LexActivator:
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
         return LexActivatorNative.byte_to_string(buffer.value)
+    @staticmethod
+    def GetActivationId():
+        """Gets the activation id.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                str: the activation id
+        """
+        buffer_size = 256
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetActivationId(buffer, buffer_size)
+        if status != LexStatusCodes.LA_OK:
+            raise LexActivatorException(status)
+        return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
     def GetActivationMetadata(key):
