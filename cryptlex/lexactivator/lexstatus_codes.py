@@ -134,3 +134,5 @@ class LexStatusCodes:
     LA_E_OIDC_SSO_NOT_ENABLED = 102
 
     LA_E_USERS_LIMIT_REACHED = 103
+
+    LA_E_OS_USER = 104
