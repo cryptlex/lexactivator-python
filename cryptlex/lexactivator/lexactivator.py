@@ -643,6 +643,46 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
+    def GetLicenseAllowedDeactivations():
+        """Gets the allowed deactivations of the license.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: the allowed deactivations
+        """
+        allowed_deactivations = ctypes.c_uint()
+        status = LexActivatorNative.GetLicenseAllowedDeactivations(
+            ctypes.byref(allowed_deactivations))
+        if status == LexStatusCodes.LA_OK:
+            return allowed_deactivations.value
+        elif status == LexStatusCodes.LA_FAIL:
+            return 0
+        else:
+            raise LexActivatorException(status)
+
+    @staticmethod
+    def GetLicenseTotalDeactivations():
+        """Gets the total deactivations of the license.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: the allowed deactivations
+        """
+        total_deactivations = ctypes.c_uint()
+        status = LexActivatorNative.GetLicenseTotalDeactivations(
+            ctypes.byref(total_deactivations))
+        if status == LexStatusCodes.LA_OK:
+            return total_deactivations.value
+        elif status == LexStatusCodes.LA_FAIL:
+            return 0
+        else:
+            raise LexActivatorException(status)
+
+    @staticmethod
     def GetLicenseCreationDate():
         """Gets the license creation date timestamp.
 
