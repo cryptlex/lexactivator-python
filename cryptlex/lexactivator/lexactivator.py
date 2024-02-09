@@ -670,7 +670,7 @@ class LexActivator:
                 LexActivatorException
 
         Returns:
-                int: the allowed deactivations
+                int: the total deactivations
         """
         total_deactivations = ctypes.c_uint()
         status = LexActivatorNative.GetLicenseTotalDeactivations(
