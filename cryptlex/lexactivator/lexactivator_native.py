@@ -235,6 +235,14 @@ GetLicenseTotalActivations = library.GetLicenseTotalActivations
 GetLicenseTotalActivations.argtypes = [POINTER(c_uint32)]
 GetLicenseTotalActivations.restype = c_int
 
+GetLicenseAllowedDeactivations = library.GetLicenseAllowedDeactivations
+GetLicenseAllowedDeactivations.argtypes = [POINTER(c_uint32)]
+GetLicenseAllowedDeactivations.restype = c_int
+
+GetLicenseTotalDeactivations = library.GetLicenseTotalDeactivations
+GetLicenseTotalDeactivations.argtypes = [POINTER(c_uint32)]
+GetLicenseTotalDeactivations.restype = c_int
+
 GetLicenseCreationDate = library.GetLicenseCreationDate
 GetLicenseCreationDate.argtypes = [POINTER(c_uint32)]
 GetLicenseCreationDate.restype = c_int
