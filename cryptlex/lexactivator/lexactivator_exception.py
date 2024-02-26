@@ -61,7 +61,7 @@ class LexActivatorException(Exception):
         if code == LexStatusCodes.LA_E_METADATA_KEY_LENGTH:
             return 'Metadata key length is more than 256 characters.'
         if code == LexStatusCodes.LA_E_METADATA_VALUE_LENGTH:
-            return 'Metadata value length is more than 256 characters.'
+            return 'Metadata value length is more than 4096 characters.'
         if code == LexStatusCodes.LA_E_ACTIVATION_METADATA_LIMIT:
             return 'The license has reached it\'s metadata fields limit.'
         if code == LexStatusCodes.LA_E_TRIAL_ACTIVATION_METADATA_LIMIT:
