@@ -135,6 +135,10 @@ SetDebugMode = library.SetDebugMode
 SetDebugMode.argtypes = [c_uint32]
 SetDebugMode.restype = c_int
 
+SetCacheMode = library.SetCacheMode
+SetCacheMode.argtypes = [c_uint32]
+SetCacheMode.restype = c_int
+
 SetCustomDeviceFingerprint = library.SetCustomDeviceFingerprint
 SetCustomDeviceFingerprint.argtypes = [CSTRTYPE]
 SetCustomDeviceFingerprint.restype = c_int
