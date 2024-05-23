@@ -184,8 +184,8 @@ class LexActivator:
         Raises:
                 LexActivatorException
         """
-
-        status = LexActivatorNative.SetCacheMode(enable)
+        enable_int = 1 if enable else 0
+        status = LexActivatorNative.SetCacheMode(enable_int)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
 
