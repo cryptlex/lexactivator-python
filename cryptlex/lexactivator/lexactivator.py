@@ -165,6 +165,29 @@ class LexActivator:
         status = LexActivatorNative.SetDebugMode(enable)
         if LexStatusCodes.LA_OK != status:
             raise LexActivatorException(status)
+        
+    @staticmethod
+    def SetCacheMode(enable: bool):
+        """Enables or disables in-memory caching for LexActivator.
+
+        This function is designed to control caching
+        behavior to suit specific application requirements. 
+        
+        Caching is enabled by default to enhance performance.
+        
+        Disabling caching is recommended in environments where multiple processes access the same license on a 
+        single machine and require real-time updates to the license state.
+
+        Args:
+                enable (bool): True to enable caching, False to disable.
+
+        Raises:
+                LexActivatorException
+        """
+        enable_int = 1 if enable else 0
+        status = LexActivatorNative.SetCacheMode(enable_int)
+        if LexStatusCodes.LA_OK != status:
+            raise LexActivatorException(status)
 
     @staticmethod
     def SetCustomDeviceFingerprint(fingerprint):
