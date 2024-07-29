@@ -607,9 +607,9 @@ class LexActivator:
                 LicenseMeterAttribute: values of meter attribute allowed, total and gross uses
         """
         cstring_name = LexActivatorNative.get_ctype_string(name)
-        allowed_uses = ctypes.c_uint()
-        total_uses = ctypes.c_uint()
-        gross_uses = ctypes.c_uint()
+        allowed_uses = ctypes.c_int64()
+        total_uses = ctypes.c_uint64()
+        gross_uses = ctypes.c_uint64()
         status = LexActivatorNative.GetLicenseMeterAttribute(
             cstring_name, ctypes.byref(allowed_uses), ctypes.byref(total_uses), ctypes.byref(gross_uses))
         if status == LexStatusCodes.LA_OK:
@@ -644,7 +644,7 @@ class LexActivator:
         Returns:
                 int: the allowed activation
         """
-        allowed_activations = ctypes.c_uint()
+        allowed_activations = ctypes.c_int64()
         status = LexActivatorNative.GetLicenseAllowedActivations(
             ctypes.byref(allowed_activations))
         if status == LexStatusCodes.LA_OK:
@@ -684,7 +684,7 @@ class LexActivator:
         Returns:
                 int: the allowed deactivations
         """
-        allowed_deactivations = ctypes.c_uint()
+        allowed_deactivations = ctypes.c_int64()
         status = LexActivatorNative.GetLicenseAllowedDeactivations(
             ctypes.byref(allowed_deactivations))
         if status == LexStatusCodes.LA_OK:
