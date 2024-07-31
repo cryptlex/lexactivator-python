@@ -280,7 +280,8 @@ class LexActivator:
         lease duration property is enabled.
 
         Args:
-                lease_duration(int): value of the lease duration.
+                lease_duration(int): value of the lease duration. A value of -1 indicates unlimited 
+                lease duration.
         
         Raises:
                 LexActivatorException
