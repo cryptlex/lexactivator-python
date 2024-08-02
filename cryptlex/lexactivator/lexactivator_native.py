@@ -156,7 +156,7 @@ SetLicenseCallback.argtypes = [CallbackType]
 SetLicenseCallback.restype = c_int
 
 SetActivationLeaseDuration = library.SetActivationLeaseDuration
-SetActivationLeaseDuration.argtypes = [c_uint32]
+SetActivationLeaseDuration.argtypes = [c_int64]
 SetActivationLeaseDuration.restype = c_int
 
 SetActivationMetadata = library.SetActivationMetadata
@@ -224,7 +224,7 @@ GetLicenseMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetLicenseMetadata.restype = c_int
 
 GetLicenseMeterAttribute = library.GetLicenseMeterAttribute
-GetLicenseMeterAttribute.argtypes = [CSTRTYPE, POINTER(c_uint32), POINTER(c_uint32), POINTER(c_uint32)]
+GetLicenseMeterAttribute.argtypes = [CSTRTYPE, POINTER(c_int64), POINTER(c_uint64), POINTER(c_uint64)]
 GetLicenseMeterAttribute.restype = c_int
 
 GetLicenseKey = library.GetLicenseKey
@@ -232,7 +232,7 @@ GetLicenseKey.argtypes = [STRTYPE, c_uint32]
 GetLicenseKey.restype = c_int
 
 GetLicenseAllowedActivations = library.GetLicenseAllowedActivations
-GetLicenseAllowedActivations.argtypes = [POINTER(c_uint32)]
+GetLicenseAllowedActivations.argtypes = [POINTER(c_int64)]
 GetLicenseAllowedActivations.restype = c_int
 
 GetLicenseTotalActivations = library.GetLicenseTotalActivations
@@ -240,7 +240,7 @@ GetLicenseTotalActivations.argtypes = [POINTER(c_uint32)]
 GetLicenseTotalActivations.restype = c_int
 
 GetLicenseAllowedDeactivations = library.GetLicenseAllowedDeactivations
-GetLicenseAllowedDeactivations.argtypes = [POINTER(c_uint32)]
+GetLicenseAllowedDeactivations.argtypes = [POINTER(c_int64)]
 GetLicenseAllowedDeactivations.restype = c_int
 
 GetLicenseTotalDeactivations = library.GetLicenseTotalDeactivations
