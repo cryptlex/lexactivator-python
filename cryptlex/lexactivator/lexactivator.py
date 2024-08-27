@@ -51,6 +51,7 @@ class UserLicense(object):
         self.allowed_deactivations = user_license.get("allowedDeactivations")
         self.key = user_license.get("key")
         self.type = user_license.get("type")
+        self.metadata = user_license.get("metadata", [])
 
 class LexActivator:
     @staticmethod
