@@ -4,6 +4,7 @@ from cryptlex.lexactivator import lexactivator_native as LexActivatorNative
 from cryptlex.lexactivator.lexstatus_codes import LexStatusCodes
 from cryptlex.lexactivator.lexactivator_exception import LexActivatorException
 from cryptlex.lexactivator.lexrelease import Release
+from cryptlex.lexactivator.lexuser_license import UserLicense
 
 callback_list = []
 
@@ -44,14 +45,6 @@ class OrganizationAddress(object):
         self.state = state
         self.country = country
         self.postal_code = postal_code
-
-class UserLicense(object):
-    def __init__(self, user_license):
-        self.allowed_activations = user_license.get("allowedActivations")
-        self.allowed_deactivations = user_license.get("allowedDeactivations")
-        self.key = user_license.get("key")
-        self.type = user_license.get("type")
-        self.metadata = user_license.get("metadata",[])
 
 class LexActivator:
     @staticmethod
