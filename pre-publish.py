@@ -46,7 +46,9 @@ def main():
         FileInfo('libs/vc14/x86/LexActivator.dll',
                  base_path + '/win32/x86/LexActivator.dll'),
         FileInfo('libs/vc14/x64/LexActivator.dll',
-                 base_path + '/win32/x86_64/LexActivator.dll')
+                 base_path + '/win32/x86_64/LexActivator.dll'),
+        FileInfo('libs/vc17/arm64/LexActivator.dll',
+                 base_path + '/win32/arm64/LexActivator.dll')
     ]
     url = '/LexActivator-Win.zip'
     download(base_url + lexactivator_libs_version + url, files)
