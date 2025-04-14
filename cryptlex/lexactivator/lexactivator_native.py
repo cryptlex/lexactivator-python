@@ -219,6 +219,22 @@ GetProductVersionFeatureFlag = library.GetProductVersionFeatureFlag
 GetProductVersionFeatureFlag.argtypes = [CSTRTYPE, POINTER(c_uint32), STRTYPE, c_uint32]
 GetProductVersionFeatureFlag.restype = c_int
 
+GetLicenseEntitlementSetName = library.GetLicenseEntitlementSetName
+GetLicenseEntitlementSetName.argtypes = [STRTYPE, c_uint32]
+GetLicenseEntitlementSetName.restype = c_int
+
+GetLicenseEntitlementSetDisplayName = library.GetLicenseEntitlementSetDisplayName
+GetLicenseEntitlementSetDisplayName.argtypes = [STRTYPE, c_uint32]
+GetLicenseEntitlementSetDisplayName.restype = c_int
+
+GetFeatureEntitlements = library.GetFeatureEntitlementsInternal
+GetFeatureEntitlements.argtypes = [STRTYPE, c_uint32]
+GetFeatureEntitlements.restype = c_int
+
+GetFeatureEntitlement = library.GetFeatureEntitlementInternal
+GetFeatureEntitlement.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
+GetFeatureEntitlement.restype = c_int
+
 GetLicenseMetadata = library.GetLicenseMetadata
 GetLicenseMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetLicenseMetadata.restype = c_int
