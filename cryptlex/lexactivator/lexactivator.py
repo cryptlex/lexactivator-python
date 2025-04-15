@@ -25,6 +25,11 @@ class LicenseMeterAttribute(object):
         self.total_uses = total_uses
         self.gross_uses = gross_uses
 
+class FeatureEntitlement(object):
+    def __init__(self, feature_entitlement_dict):
+        self.feature_name = feature_entitlement_dict.get("featureName")
+        self.value = feature_entitlement_dict.get("value")
+
 class ProductVersionFeatureFlag(object):
     def __init__(self, name, enabled, data):
         self.name = name
@@ -575,6 +580,88 @@ class LexActivator:
         if status == LexStatusCodes.LA_OK:
             isEnabled = enabled.value > 0
             return ProductVersionFeatureFlag(name, isEnabled, LexActivatorNative.byte_to_string(buffer.value))
+        else:
+            raise LexActivatorException(status)
+        
+    @staticmethod
+    def GetLicenseEntitlementSetName():
+        """Gets the license entitlement set name.
+
+        Raises:
+                LexActivatorException
+        
+        Returns:
+                str: name of the license entitlement set.
+        """
+        buffer_size = 256
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetLicenseEntitlementSetName(buffer, buffer_size)
+        if status != LexStatusCodes.LA_OK:
+            raise LexActivatorException(status)
+        return LexActivatorNative.byte_to_string(buffer.value)
+    
+    @staticmethod
+    def GetLicenseEntitlementSetDisplayName():
+        """Gets the license entitlement set display name.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                str: display name of the license entitlement set.
+        """
+        buffer_size = 256
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetLicenseEntitlementSetDisplayName(buffer, buffer_size)
+        if status != LexStatusCodes.LA_OK:
+            raise LexActivatorException(status)
+        return LexActivatorNative.byte_to_string(buffer.value)
+    
+    @staticmethod
+    def GetFeatureEntitlements():
+        """Gets the feature entitlements.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                FeatureEntitlement[]: list of feature entitlements
+        """
+        buffer_size = 4096
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetFeatureEntitlements(buffer, buffer_size)
+        if status == LexStatusCodes.LA_OK:
+            feature_entitlements_json = LexActivatorNative.byte_to_string(buffer.value)
+            if not feature_entitlements_json.strip():
+                return []
+            else:
+                feature_entitlements = json.loads(feature_entitlements_json)
+                feature_entitlements_list = [FeatureEntitlement(feature_detail) for feature_detail in feature_entitlements]
+                return feature_entitlements_list
+        else:
+            raise LexActivatorException(status)
+        
+    @staticmethod
+    def GetFeatureEntitlement(feature_name):
+        """Gets the feature entitlement.
+
+        Args:
+                feature_name (str): name of the feature entitlement
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                FeatureEntitlement: feature entitlement
+        """
+        cstring_feature_name = LexActivatorNative.get_ctype_string(feature_name)
+        buffer_size = 1024
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetFeatureEntitlement(cstring_feature_name, buffer, buffer_size)
+        if status == LexStatusCodes.LA_OK:
+            feature_entitlement_json = LexActivatorNative.byte_to_string(buffer.value)
+            feature_entitlement = json.loads(feature_entitlement_json)
+            return FeatureEntitlement(feature_entitlement)
         else:
             raise LexActivatorException(status)
 

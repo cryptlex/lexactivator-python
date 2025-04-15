@@ -116,6 +116,8 @@ class LexActivatorException(Exception):
             return 'Server error.'
         if code == LexStatusCodes.LA_E_CLIENT:
             return 'Client error.'
+        if code == LexStatusCodes.LA_E_ACCOUNT_ID:
+            return 'Invalid account ID.'
         if code == LexStatusCodes.LA_E_LOGIN_TEMPORARILY_LOCKED:
             return 'The user account has been temporarily locked for 5 mins due to 5 failed attempts.'
         if code == LexStatusCodes.LA_E_AUTHENTICATION_ID_TOKEN_INVALID:
@@ -130,4 +132,10 @@ class LexActivatorException(Exception):
             return 'Invalid permission flag.'
         if code == LexStatusCodes.LA_E_FREE_PLAN_ACTIVATION_LIMIT_REACHED:
             return 'The free plan has reached its activation limit.'
+        if code == LexStatusCodes.LA_E_FEATURE_ENTITLEMENTS_INVALID:
+            return 'Invalid feature entitlements.'
+        if code == LexStatusCodes.LA_E_FEATURE_ENTITLEMENT_NOT_FOUND:
+            return 'The feature entitlement does not exist.'
+        if code == LexStatusCodes.LA_E_ENTITLEMENT_SET_NOT_LINKED:
+            return 'No entitlement set is linked to the license.'
         return 'Unknown error!'
