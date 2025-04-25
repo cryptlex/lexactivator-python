@@ -28,6 +28,7 @@ class LicenseMeterAttribute(object):
 class FeatureEntitlement(object):
     def __init__(self, feature_entitlement_dict):
         self.feature_name = feature_entitlement_dict.get("featureName")
+        self.feature_display_name = feature_entitlement_dict.get("featureDisplayName")
         self.value = feature_entitlement_dict.get("value")
 
 class ProductVersionFeatureFlag(object):
