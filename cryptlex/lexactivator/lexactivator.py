@@ -1,5 +1,7 @@
 import ctypes
 import json
+import functools
+import warnings
 from cryptlex.lexactivator import lexactivator_native as LexActivatorNative
 from cryptlex.lexactivator.lexstatus_codes import LexStatusCodes
 from cryptlex.lexactivator.lexactivator_exception import LexActivatorException
@@ -7,6 +9,24 @@ from cryptlex.lexactivator.lexrelease import Release
 
 callback_list = []
 
+def deprecated(alternative):
+    """This is a decorator which can be used to mark functions as deprecated.
+    It will result in a warning being emitted when the function is used.
+    
+    Args:
+        alternative (str): Name of the alternative function to use
+    """
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            warnings.warn(
+                f"The function {func.__name__}() is deprecated. Use {alternative}() instead.",
+                category=DeprecationWarning,
+                stacklevel=2
+            )
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
 
 class PermissionFlags:
     LA_USER = 1
@@ -66,6 +86,7 @@ class UserLicense(object):
 
 class LexActivator:
     @staticmethod
+    @deprecated("SetProductData")
     def SetProductFile(file_path):
         """Sets the absolute path of the Product.dat file.
 
@@ -241,6 +262,7 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
+    @deprecated("AuthenticateUser")
     def SetLicenseUserCredential(email, password):
         """Sets the license user email and password for authentication.
 
@@ -345,6 +367,7 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
+    @deprecated("SetReleaseVersion")
     def SetAppVersion(app_version):
         """Sets the current app version of your application.
 
@@ -525,6 +548,7 @@ class LexActivator:
         return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
+    @deprecated("GetLicenseEntitlementSetName")
     def GetProductVersionName():
         """Gets the product version name.
 
@@ -543,6 +567,7 @@ class LexActivator:
         return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
+    @deprecated("GetLicenseEntitlementSetDisplayName")
     def GetProductVersionDisplayName():
         """Gets the product version display name.
 
@@ -561,6 +586,7 @@ class LexActivator:
         return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
+    @deprecated("GetFeatureEntitlement")
     def GetProductVersionFeatureFlag(name):
         """Gets the product version feature flag.
 
@@ -1280,6 +1306,7 @@ class LexActivator:
         return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
+    @deprecated("CheckReleaseUpdate")
     def CheckForReleaseUpdate(platform, version, channel, release_callback):
         """Checks whether a new release is available for the product.
 
