@@ -780,6 +780,26 @@ class LexActivator:
             return 0
         else:
             raise LexActivatorException(status)
+        
+    @staticmethod
+    def GetActivationLastSyncedDate():
+        """Gets the activation last synced date timestamp.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: the timestamp
+        """
+        activation_last_synced_date = ctypes.c_uint()
+        status = LexActivatorNative.GetActivationLastSyncedDate(
+            ctypes.byref(activation_last_synced_date))
+        if status == LexStatusCodes.LA_OK:
+            return activation_last_synced_date.value
+        elif status == LexStatusCodes.LA_FAIL:
+            return 0
+        else:
+            raise LexActivatorException(status)
 
     @staticmethod
     def GetLicenseExpiryDate():

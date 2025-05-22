@@ -259,6 +259,10 @@ GetActivationCreationDate = library.GetActivationCreationDate
 GetActivationCreationDate.argtypes = [POINTER(c_uint32)]
 GetActivationCreationDate.restype = c_int
 
+GetActivationLastSyncedDate = library.GetActivationLastSyncedDate
+GetActivationLastSyncedDate.argtypes = [POINTER(c_uint32)]
+GetActivationLastSyncedDate.restype = c_int
+
 GetLicenseExpiryDate = library.GetLicenseExpiryDate
 GetLicenseExpiryDate.argtypes = [POINTER(c_uint32)]
 GetLicenseExpiryDate.restype = c_int
