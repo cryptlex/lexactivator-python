@@ -1,5 +1,7 @@
 import ctypes
 import json
+import functools
+import warnings
 from cryptlex.lexactivator import lexactivator_native as LexActivatorNative
 from cryptlex.lexactivator.lexstatus_codes import LexStatusCodes
 from cryptlex.lexactivator.lexactivator_exception import LexActivatorException
@@ -7,6 +9,24 @@ from cryptlex.lexactivator.lexrelease import Release
 
 callback_list = []
 
+def deprecated(alternative):
+    """This is a decorator which can be used to mark functions as deprecated.
+    It will result in a warning being emitted when the function is used.
+    
+    Args:
+        alternative (str): Name of the alternative function to use
+    """
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            warnings.warn(
+                f"The function {func.__name__}() is deprecated. Use {alternative}() instead.",
+                category=DeprecationWarning,
+                stacklevel=2
+            )
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
 
 class PermissionFlags:
     LA_USER = 1
@@ -24,6 +44,12 @@ class LicenseMeterAttribute(object):
         self.allowed_uses = allowed_uses
         self.total_uses = total_uses
         self.gross_uses = gross_uses
+
+class FeatureEntitlement(object):
+    def __init__(self, feature_entitlement_dict):
+        self.feature_name = feature_entitlement_dict.get("featureName")
+        self.feature_display_name = feature_entitlement_dict.get("featureDisplayName")
+        self.value = feature_entitlement_dict.get("value")
 
 class ProductVersionFeatureFlag(object):
     def __init__(self, name, enabled, data):
@@ -60,6 +86,7 @@ class UserLicense(object):
 
 class LexActivator:
     @staticmethod
+    @deprecated("SetProductData")
     def SetProductFile(file_path):
         """Sets the absolute path of the Product.dat file.
 
@@ -235,6 +262,7 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
+    @deprecated("AuthenticateUser")
     def SetLicenseUserCredential(email, password):
         """Sets the license user email and password for authentication.
 
@@ -339,6 +367,7 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
+    @deprecated("SetReleaseVersion")
     def SetAppVersion(app_version):
         """Sets the current app version of your application.
 
@@ -519,6 +548,7 @@ class LexActivator:
         return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
+    @deprecated("GetLicenseEntitlementSetName")
     def GetProductVersionName():
         """Gets the product version name.
 
@@ -537,6 +567,7 @@ class LexActivator:
         return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
+    @deprecated("GetLicenseEntitlementSetDisplayName")
     def GetProductVersionDisplayName():
         """Gets the product version display name.
 
@@ -555,6 +586,7 @@ class LexActivator:
         return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
+    @deprecated("GetFeatureEntitlement")
     def GetProductVersionFeatureFlag(name):
         """Gets the product version feature flag.
 
@@ -575,6 +607,88 @@ class LexActivator:
         if status == LexStatusCodes.LA_OK:
             isEnabled = enabled.value > 0
             return ProductVersionFeatureFlag(name, isEnabled, LexActivatorNative.byte_to_string(buffer.value))
+        else:
+            raise LexActivatorException(status)
+        
+    @staticmethod
+    def GetLicenseEntitlementSetName():
+        """Gets the license entitlement set name.
+
+        Raises:
+                LexActivatorException
+        
+        Returns:
+                str: name of the license entitlement set.
+        """
+        buffer_size = 256
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetLicenseEntitlementSetName(buffer, buffer_size)
+        if status != LexStatusCodes.LA_OK:
+            raise LexActivatorException(status)
+        return LexActivatorNative.byte_to_string(buffer.value)
+    
+    @staticmethod
+    def GetLicenseEntitlementSetDisplayName():
+        """Gets the license entitlement set display name.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                str: display name of the license entitlement set.
+        """
+        buffer_size = 256
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetLicenseEntitlementSetDisplayName(buffer, buffer_size)
+        if status != LexStatusCodes.LA_OK:
+            raise LexActivatorException(status)
+        return LexActivatorNative.byte_to_string(buffer.value)
+    
+    @staticmethod
+    def GetFeatureEntitlements():
+        """Gets the feature entitlements.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                FeatureEntitlement[]: list of feature entitlements
+        """
+        buffer_size = 4096
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetFeatureEntitlements(buffer, buffer_size)
+        if status == LexStatusCodes.LA_OK:
+            feature_entitlements_json = LexActivatorNative.byte_to_string(buffer.value)
+            if not feature_entitlements_json.strip():
+                return []
+            else:
+                feature_entitlements = json.loads(feature_entitlements_json)
+                feature_entitlements_list = [FeatureEntitlement(feature_detail) for feature_detail in feature_entitlements]
+                return feature_entitlements_list
+        else:
+            raise LexActivatorException(status)
+        
+    @staticmethod
+    def GetFeatureEntitlement(feature_name):
+        """Gets the feature entitlement.
+
+        Args:
+                feature_name (str): name of the feature entitlement
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                FeatureEntitlement: feature entitlement
+        """
+        cstring_feature_name = LexActivatorNative.get_ctype_string(feature_name)
+        buffer_size = 1024
+        buffer = LexActivatorNative.get_ctype_string_buffer(buffer_size)
+        status = LexActivatorNative.GetFeatureEntitlement(cstring_feature_name, buffer, buffer_size)
+        if status == LexStatusCodes.LA_OK:
+            feature_entitlement_json = LexActivatorNative.byte_to_string(buffer.value)
+            feature_entitlement = json.loads(feature_entitlement_json)
+            return FeatureEntitlement(feature_entitlement)
         else:
             raise LexActivatorException(status)
 
@@ -1212,6 +1326,7 @@ class LexActivator:
         return LexActivatorNative.byte_to_string(buffer.value)
 
     @staticmethod
+    @deprecated("CheckReleaseUpdate")
     def CheckForReleaseUpdate(platform, version, channel, release_callback):
         """Checks whether a new release is available for the product.
 
