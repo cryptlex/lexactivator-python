@@ -18,6 +18,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Create new branch
+        run: git checkout -b release/${{ github.event.inputs.packageVersion }}
       
       - name: Update Package Version
         run: |
@@ -33,6 +36,7 @@ jobs:
           git add setup.py
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git commit -m "updated version" | exit 0
+          git commit -m "chore(package version): updated version" | exit 0
           git tag ${{ github.event.inputs.packageVersion }}
-          git push & git push --tags
+          git push --set-upstream origin release/${{ github.event.inputs.packageVersion }} 
+          git push --tags
