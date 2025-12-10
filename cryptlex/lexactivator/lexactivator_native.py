@@ -343,6 +343,10 @@ GetServerSyncGracePeriodExpiryDate = library.GetServerSyncGracePeriodExpiryDate
 GetServerSyncGracePeriodExpiryDate.argtypes = [POINTER(c_uint32)]
 GetServerSyncGracePeriodExpiryDate.restype = c_int
 
+GetLastActivationError = library.GetLastActivationError
+GetLastActivationError.argtypes = [POINTER(c_uint32)]
+GetLastActivationError.restype = c_int
+
 GetTrialActivationMetadata = library.GetTrialActivationMetadata
 GetTrialActivationMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetTrialActivationMetadata.restype = c_int

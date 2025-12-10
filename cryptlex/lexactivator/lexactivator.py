@@ -1230,6 +1230,22 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
+    def GetLastActivationError():
+        """Gets the error code that caused the activation data to be cleared.
+
+        Raises:
+                LexActivatorException
+        Returns:
+                int: error code
+        """
+        error_code = ctypes.c_uint()
+        status = LexActivatorNative.GetLastActivationError(
+            ctypes.byref(error_code))
+        if status == LexStatusCodes.LA_OK:
+            return error_code.value
+        raise LexActivatorException(status)
+
+    @staticmethod
     def GetTrialActivationMetadata(key):
         """Gets the trial activation metadata.
 
