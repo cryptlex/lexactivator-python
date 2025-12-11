@@ -50,6 +50,7 @@ class FeatureEntitlement(object):
         self.feature_name = feature_entitlement_dict.get("featureName")
         self.feature_display_name = feature_entitlement_dict.get("featureDisplayName")
         self.value = feature_entitlement_dict.get("value")
+        self.expires_at = feature_entitlement_dict.get("expiresAt")
 
 class ProductVersionFeatureFlag(object):
     def __init__(self, name, enabled, data):
@@ -81,6 +82,8 @@ class UserLicense(object):
         self.allowed_activations = user_license_dict.get("allowedActivations")
         self.allowed_deactivations = user_license_dict.get("allowedDeactivations")
         self.key = user_license_dict.get("key")
+        self.total_activations = user_license_dict.get("totalActivations")
+        self.total_deactivations = user_license_dict.get("totalDeactivations")
         self.type = user_license_dict.get("type")
         self.metadata = [Metadata(metadata_dict) for metadata_dict in user_license_dict.get("metadata", [])]
 
