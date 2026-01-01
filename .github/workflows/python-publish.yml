@@ -1,0 +1,52 @@
+name: Publish cryptlex.lexactivator package
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - run: git pull origin master --ff-only
+
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools wheel twine
+
+    - name: Download Native Libs
+      run: python pre-publish.py
+
+    - name: Build and publish
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+      run: |
+        python setup.py sdist bdist_wheel
+        twine upload dist/*
+
+    - name: Extract version and create tag
+      run: |
+        VERSION=$(sed -n 's/^[[:space:]]*version="\([^"]*\)".*/\1/p' setup.py)
+
+        [ -n "$VERSION" ] || exit 1
+
+        git tag "$VERSION" 2>/dev/null || echo "Tag already exists"
+        git push origin "$VERSION"
+
+    - name: Notify slack releases channel
+      uses: slackapi/slack-github-action@v2.1
+      with:
+        webhook: ${{ secrets.SLACK_RELEASES_PROD_WEBHOOK_URL }}
+        webhook-type: webhook-trigger
+        payload: |
+          status: "${{ job.status }}"
+          environment: "PRODUCTION"
+          project: "LexActivator Python"
