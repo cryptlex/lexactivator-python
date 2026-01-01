@@ -7,12 +7,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - run: git pull origin master --ff-only
 
     - name: Set up Python
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v5
       with:
         python-version: '3.x'
 
@@ -39,10 +39,10 @@ jobs:
         [ -n "$VERSION" ] || exit 1
 
         git tag "$VERSION" 2>/dev/null || echo "Tag already exists"
-        git push origin "$VERSION"
+        git push origin "$VERSION" || true
 
     - name: Notify slack releases channel
-      uses: slackapi/slack-github-action@v2.1
+      uses: slackapi/slack-github-action@v2
       with:
         webhook: ${{ secrets.SLACK_RELEASES_PROD_WEBHOOK_URL }}
         webhook-type: webhook-trigger

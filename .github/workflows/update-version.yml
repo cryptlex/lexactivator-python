@@ -20,15 +20,15 @@ jobs:
       PACKAGE_VERSION: ${{ github.event.inputs.packageVersion }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Update Package Version
         run: |
-          sed -i '/version=/!b;c \ \ \ \ version="${{ env.PACKAGE_VERSION }}",' setup.py
+          sed -i -E 's/^([[:space:]]*)version="[^"]*"/\1version="${{ env.PACKAGE_VERSION }}"/' setup.py
 
       - name: Update Library Version
         run: |
-          sed -i '/lexactivator_libs_version =/!b;clexactivator_libs_version = "v${{ env.LIBRARY_VERSION }}"' pre-publish.py
+          sed -i -E 's/^([[:space:]]*lexactivator_libs_version[[:space:]]*=[[:space:]]*)"[^"]*"/\1"v${{ env.LIBRARY_VERSION }}"/' pre-publish.py
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
