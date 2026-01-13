@@ -1862,6 +1862,35 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
+    def MigrateToSystemWideActivation(oldPermissionFlag):
+        """Migrates existing license data to system-wide storage.
+
+        Call this function after SetProductData().
+
+        If you intend to use a custom data directory after migration,
+        set it first using SetDataDirectory().
+
+        Note:
+                The function does not support migration from custom data directories.
+
+        Args:
+                oldPermissionFlag (int): permission flag used previously
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: LA_OK, LA_FAIL
+        """
+        status = LexActivatorNative.MigrateToSystemWideActivation(oldPermissionFlag)
+        if LexStatusCodes.LA_OK == status:
+            return LexStatusCodes.LA_OK
+        elif LexStatusCodes.LA_FAIL == status:
+            return LexStatusCodes.LA_FAIL
+        else:
+            raise LexActivatorException(status)
+
+    @staticmethod
     def Reset():
         """Resets the activation and trial data stored in the machine.
 
