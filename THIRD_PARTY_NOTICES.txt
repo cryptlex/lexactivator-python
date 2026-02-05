@@ -1,0 +1,115 @@
+Pygments
+2.19.2
+BSD License
+https://pygments.org
+
+certifi
+2025.11.12
+Mozilla Public License 2.0 (MPL 2.0)
+https://github.com/certifi/python-certifi
+
+charset-normalizer
+3.4.4
+MIT
+https://github.com/jawah/charset_normalizer/blob/master/CHANGELOG.md
+
+docutils
+0.22.3
+BSD License; GNU General Public License (GPL); Public Domain
+https://docutils.sourceforge.io
+
+id
+1.5.0
+Apache Software License
+https://pypi.org/project/id/
+
+idna
+3.11
+BSD-3-Clause
+https://github.com/kjd/idna
+
+jaraco.classes
+3.4.0
+MIT License
+https://github.com/jaraco/jaraco.classes
+
+jaraco.context
+6.0.1
+MIT License
+https://github.com/jaraco/jaraco.context
+
+jaraco.functools
+4.3.0
+MIT
+https://github.com/jaraco/jaraco.functools
+
+keyring
+25.7.0
+MIT
+https://github.com/jaraco/keyring
+
+markdown-it-py
+4.0.0
+MIT License
+https://github.com/executablebooks/markdown-it-py
+
+mdurl
+0.1.2
+MIT License
+https://github.com/executablebooks/mdurl
+
+more-itertools
+10.8.0
+MIT
+https://github.com/more-itertools/more-itertools
+
+nh3
+0.3.2
+MIT
+UNKNOWN
+
+packaging
+25.0
+Apache Software License; BSD License
+https://github.com/pypa/packaging
+
+pipdeptree
+2.30.0
+MIT
+https://github.com/tox-dev/pipdeptree
+
+readme_renderer
+44.0
+Apache Software License
+UNKNOWN
+
+requests
+2.32.5
+Apache Software License
+https://requests.readthedocs.io
+
+requests-toolbelt
+1.0.0
+Apache Software License
+https://toolbelt.readthedocs.io/
+
+rfc3986
+2.0.0
+Apache Software License
+http://rfc3986.readthedocs.io
+
+rich
+14.2.0
+MIT License
+https://github.com/Textualize/rich
+
+twine
+6.2.0
+Apache-2.0
+https://twine.readthedocs.io/
+
+urllib3
+2.5.0
+MIT
+https://github.com/urllib3/urllib3/blob/main/CHANGES.rst
+

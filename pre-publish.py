@@ -37,7 +37,9 @@ def main():
         FileInfo('libs/clang/x86_64/libLexActivator.dylib',
                       base_path + '/macos/x86_64/libLexActivator.dylib'),
         FileInfo('libs/clang/arm64/libLexActivator.dylib',
-                      base_path + '/macos/arm64/libLexActivator.dylib')
+                      base_path + '/macos/arm64/libLexActivator.dylib'),
+        FileInfo('THIRD-PARTY-NOTICES.txt',
+                      base_path + '/THIRD-PARTY-NOTICES.txt')
     ]
     url = '/LexActivator-Mac.zip'
     download(base_url + lexactivator_libs_version + url, files)
