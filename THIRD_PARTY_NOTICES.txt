@@ -68,16 +68,6 @@ nh3
 MIT
 UNKNOWN
 
-packaging
-25.0
-Apache Software License; BSD License
-https://github.com/pypa/packaging
-
-pipdeptree
-2.30.0
-MIT
-https://github.com/tox-dev/pipdeptree
-
 readme_renderer
 44.0
 Apache Software License
