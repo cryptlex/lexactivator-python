@@ -3,8 +3,8 @@ THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
 
 == Apache-2.0 ==
 
-  id 1.5.0
-  packaging 25.0
+  id 1.5.0 - Copyright 2022 The Sigstore Authors.
+  packaging 25.0 - Copyright (c) Donald Stufft and individual contributors.
   readme_renderer 44.0 - Copyright © 2014, The Python Packaging Authority.
   requests 2.32.5 - Copyright 2019 Kenneth Reitz
   requests-toolbelt 1.0.0 - Copyright 2014 Ian Cordasco, Cory Benfield
@@ -492,7 +492,7 @@ SOFTWARE.
 
 == MPL-2.0 ==
 
-  certifi 2025.11.12 - UNKNOWN
+  certifi 2025.11.12
 
 ------------------------------------------------------------
 
