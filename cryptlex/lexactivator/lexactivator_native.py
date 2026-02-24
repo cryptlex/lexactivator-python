@@ -451,6 +451,10 @@ ResetActivationMeterAttributeUses = library.ResetActivationMeterAttributeUses
 ResetActivationMeterAttributeUses.argtypes = [CSTRTYPE]
 ResetActivationMeterAttributeUses.restype = c_int
 
+MigrateToSystemWideActivation = library.MigrateToSystemWideActivation
+MigrateToSystemWideActivation.argtypes = [c_uint32]
+MigrateToSystemWideActivation.restype = c_int
+
 Reset = library.Reset
 Reset.argtypes = []
 Reset.restype = c_int
