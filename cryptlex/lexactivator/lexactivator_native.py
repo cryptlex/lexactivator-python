@@ -22,7 +22,7 @@ def is_os_64bit():
 def get_arch():
     is_64bits = sys.maxsize > 2**32
     machine = platform.machine().lower()
-    if 'arm' in machine:
+    if 'arm' in machine or 'aarch64' in machine:
         if is_64bits:
             return 'arm64'
         else:
@@ -50,10 +50,13 @@ def get_library_path():
     # Get the working directory of this file
     filename = inspect.getframeinfo(inspect.currentframe()).filename
     dir_path = os.path.dirname(os.path.abspath(filename))
-    # dir_path = os.getcwd()
+
+    if not os.path.exists(dir_path):
+        dir_path = os.path.abspath(os.path.dirname(__file__))
+
     if sys.platform == 'darwin':
         return os.path.join(dir_path, "libs/macos/"+arch+"/libLexActivator.dylib")
-    elif sys.platform == 'linux':
+    elif sys.platform.startswith('linux'):
         if(is_musl()):
             compiler = 'musl'
         return os.path.join(dir_path, "libs/linux/"+compiler+"/"+arch+"/libLexActivator.so")
@@ -66,7 +69,7 @@ def get_library_path():
 def load_library(path):
     if sys.platform == 'darwin':
         return ctypes.CDLL(path, ctypes.RTLD_GLOBAL)
-    elif sys.platform == 'linux':
+    elif sys.platform.startswith('linux'):
         return ctypes.cdll.LoadLibrary(path)
     elif sys.platform == 'win32':
         return ctypes.cdll.LoadLibrary(path)
@@ -109,6 +112,7 @@ CSTRTYPE = get_char_type()
 STRTYPE = get_char_type()
 
 CallbackType = CFUNCTYPE(UNCHECKED(None), c_uint32)
+ReleaseUpdateCallbackType = CFUNCTYPE(UNCHECKED(None), c_int, CSTRTYPE, c_void_p)
 
 
 SetProductFile = library.SetProductFile
@@ -123,6 +127,22 @@ SetProductId = library.SetProductId
 SetProductId.argtypes = [CSTRTYPE, c_uint32]
 SetProductId.restype = c_int
 
+SetDataDirectory = library.SetDataDirectory
+SetDataDirectory.argtypes = [CSTRTYPE]
+SetDataDirectory.restype = c_int
+
+SetDebugMode = library.SetDebugMode
+SetDebugMode.argtypes = [c_uint32]
+SetDebugMode.restype = c_int
+
+SetCacheMode = library.SetCacheMode
+SetCacheMode.argtypes = [c_uint32]
+SetCacheMode.restype = c_int
+
+SetCustomDeviceFingerprint = library.SetCustomDeviceFingerprint
+SetCustomDeviceFingerprint.argtypes = [CSTRTYPE]
+SetCustomDeviceFingerprint.restype = c_int
+
 SetLicenseKey = library.SetLicenseKey
 SetLicenseKey.argtypes = [CSTRTYPE]
 SetLicenseKey.restype = c_int
@@ -134,6 +154,10 @@ SetLicenseUserCredential.restype = c_int
 SetLicenseCallback = library.SetLicenseCallback
 SetLicenseCallback.argtypes = [CallbackType]
 SetLicenseCallback.restype = c_int
+
+SetActivationLeaseDuration = library.SetActivationLeaseDuration
+SetActivationLeaseDuration.argtypes = [c_int64]
+SetActivationLeaseDuration.restype = c_int
 
 SetActivationMetadata = library.SetActivationMetadata
 SetActivationMetadata.argtypes = [CSTRTYPE, CSTRTYPE]
@@ -147,6 +171,22 @@ SetAppVersion = library.SetAppVersion
 SetAppVersion.argtypes = [CSTRTYPE]
 SetAppVersion.restype = c_int
 
+SetReleaseVersion = library.SetReleaseVersion
+SetReleaseVersion.argtypes = [CSTRTYPE]
+SetReleaseVersion.restype = c_int
+
+SetReleasePublishedDate = library.SetReleasePublishedDate
+SetReleasePublishedDate.argtypes = [c_uint32]
+SetReleasePublishedDate.restype = c_int
+
+SetReleasePlatform = library.SetReleasePlatform
+SetReleasePlatform.argtypes = [CSTRTYPE]
+SetReleasePlatform.restype = c_int
+
+SetReleaseChannel = library.SetReleaseChannel
+SetReleaseChannel.argtypes = [CSTRTYPE]
+SetReleaseChannel.restype = c_int
+
 SetOfflineActivationRequestMeterAttributeUses = library.SetOfflineActivationRequestMeterAttributeUses
 SetOfflineActivationRequestMeterAttributeUses.argtypes = [CSTRTYPE, c_uint32]
 SetOfflineActivationRequestMeterAttributeUses.restype = c_int
@@ -159,26 +199,97 @@ SetCryptlexHost = library.SetCryptlexHost
 SetCryptlexHost.argtypes = [CSTRTYPE]
 SetCryptlexHost.restype = c_int
 
+SetTwoFactorAuthenticationCode = library.SetTwoFactorAuthenticationCode
+SetTwoFactorAuthenticationCode.argtypes = [CSTRTYPE]
+SetTwoFactorAuthenticationCode.restype = c_int
+
 GetProductMetadata = library.GetProductMetadata
 GetProductMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetProductMetadata.restype = c_int
+
+GetProductVersionName = library.GetProductVersionName
+GetProductVersionName.argtypes = [STRTYPE,c_uint32]
+GetProductVersionName.restype = c_int
+
+GetProductVersionDisplayName = library.GetProductVersionDisplayName
+GetProductVersionDisplayName.argtypes = [STRTYPE,c_uint32]
+GetProductVersionDisplayName.restype = c_int
+
+GetProductVersionFeatureFlag = library.GetProductVersionFeatureFlag
+GetProductVersionFeatureFlag.argtypes = [CSTRTYPE, POINTER(c_uint32), STRTYPE, c_uint32]
+GetProductVersionFeatureFlag.restype = c_int
+
+GetLicenseEntitlementSetName = library.GetLicenseEntitlementSetName
+GetLicenseEntitlementSetName.argtypes = [STRTYPE, c_uint32]
+GetLicenseEntitlementSetName.restype = c_int
+
+GetLicenseEntitlementSetDisplayName = library.GetLicenseEntitlementSetDisplayName
+GetLicenseEntitlementSetDisplayName.argtypes = [STRTYPE, c_uint32]
+GetLicenseEntitlementSetDisplayName.restype = c_int
+
+GetFeatureEntitlements = library.GetFeatureEntitlementsInternal
+GetFeatureEntitlements.argtypes = [STRTYPE, c_uint32]
+GetFeatureEntitlements.restype = c_int
+
+GetFeatureEntitlement = library.GetFeatureEntitlementInternal
+GetFeatureEntitlement.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
+GetFeatureEntitlement.restype = c_int
 
 GetLicenseMetadata = library.GetLicenseMetadata
 GetLicenseMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetLicenseMetadata.restype = c_int
 
 GetLicenseMeterAttribute = library.GetLicenseMeterAttribute
-GetLicenseMeterAttribute.argtypes = [
-    CSTRTYPE, POINTER(c_uint32), POINTER(c_uint32)]
+GetLicenseMeterAttribute.argtypes = [CSTRTYPE, POINTER(c_int64), POINTER(c_uint64), POINTER(c_uint64)]
 GetLicenseMeterAttribute.restype = c_int
 
 GetLicenseKey = library.GetLicenseKey
 GetLicenseKey.argtypes = [STRTYPE, c_uint32]
 GetLicenseKey.restype = c_int
 
+GetLicenseAllowedActivations = library.GetLicenseAllowedActivations
+GetLicenseAllowedActivations.argtypes = [POINTER(c_int64)]
+GetLicenseAllowedActivations.restype = c_int
+
+GetLicenseTotalActivations = library.GetLicenseTotalActivations
+GetLicenseTotalActivations.argtypes = [POINTER(c_uint32)]
+GetLicenseTotalActivations.restype = c_int
+
+GetLicenseAllowedDeactivations = library.GetLicenseAllowedDeactivations
+GetLicenseAllowedDeactivations.argtypes = [POINTER(c_int64)]
+GetLicenseAllowedDeactivations.restype = c_int
+
+GetLicenseTotalDeactivations = library.GetLicenseTotalDeactivations
+GetLicenseTotalDeactivations.argtypes = [POINTER(c_uint32)]
+GetLicenseTotalDeactivations.restype = c_int
+
+GetLicenseCreationDate = library.GetLicenseCreationDate
+GetLicenseCreationDate.argtypes = [POINTER(c_uint32)]
+GetLicenseCreationDate.restype = c_int
+
+GetLicenseActivationDate = library.GetLicenseActivationDate
+GetLicenseActivationDate.argtypes = [POINTER(c_uint32)]
+GetLicenseActivationDate.restype = c_int
+
+GetActivationCreationDate = library.GetActivationCreationDate
+GetActivationCreationDate.argtypes = [POINTER(c_uint32)]
+GetActivationCreationDate.restype = c_int
+
+GetActivationLastSyncedDate = library.GetActivationLastSyncedDate
+GetActivationLastSyncedDate.argtypes = [POINTER(c_uint32)]
+GetActivationLastSyncedDate.restype = c_int
+
 GetLicenseExpiryDate = library.GetLicenseExpiryDate
 GetLicenseExpiryDate.argtypes = [POINTER(c_uint32)]
 GetLicenseExpiryDate.restype = c_int
+
+GetLicenseMaintenanceExpiryDate = library.GetLicenseMaintenanceExpiryDate
+GetLicenseMaintenanceExpiryDate.argtypes = [POINTER(c_uint32)]
+GetLicenseMaintenanceExpiryDate.restype = c_int
+
+GetLicenseMaxAllowedReleaseVersion = library.GetLicenseMaxAllowedReleaseVersion
+GetLicenseMaxAllowedReleaseVersion.argtypes = [STRTYPE, c_uint32]
+GetLicenseMaxAllowedReleaseVersion.restype = c_int
 
 GetLicenseUserEmail = library.GetLicenseUserEmail
 GetLicenseUserEmail.argtypes = [STRTYPE, c_uint32]
@@ -196,13 +307,33 @@ GetLicenseUserMetadata = library.GetLicenseUserMetadata
 GetLicenseUserMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetLicenseUserMetadata.restype = c_int
 
+GetLicenseOrganizationName = library.GetLicenseOrganizationName
+GetLicenseOrganizationName.argtypes = [STRTYPE, c_uint32]
+GetLicenseOrganizationName.restype = c_int
+
+GetLicenseOrganizationAddress = library.GetLicenseOrganizationAddressInternal
+GetLicenseOrganizationAddress.argtypes = [STRTYPE, c_uint32]
+GetLicenseOrganizationAddress.restype = c_int
+
+GetUserLicenses = library.GetUserLicensesInternal
+GetUserLicenses.argtypes = [STRTYPE, c_uint32]
+GetUserLicenses.restype = c_int
+
 GetLicenseType = library.GetLicenseType
 GetLicenseType.argtypes = [STRTYPE, c_uint32]
 GetLicenseType.restype = c_int
 
+GetActivationId = library.GetActivationId
+GetActivationId.argtypes = [STRTYPE, c_uint32]
+GetActivationId.restype = c_int
+
 GetActivationMetadata = library.GetActivationMetadata
 GetActivationMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetActivationMetadata.restype = c_int
+
+GetActivationMode = library.GetActivationMode
+GetActivationMode.argtypes = [STRTYPE, c_uint32, STRTYPE, c_uint32]
+GetActivationMode.restype = c_int
 
 GetActivationMeterAttributeUses = library.GetActivationMeterAttributeUses
 GetActivationMeterAttributeUses.argtypes = [CSTRTYPE, POINTER(c_uint32)]
@@ -211,6 +342,10 @@ GetActivationMeterAttributeUses.restype = c_int
 GetServerSyncGracePeriodExpiryDate = library.GetServerSyncGracePeriodExpiryDate
 GetServerSyncGracePeriodExpiryDate.argtypes = [POINTER(c_uint32)]
 GetServerSyncGracePeriodExpiryDate.restype = c_int
+
+GetLastActivationError = library.GetLastActivationError
+GetLastActivationError.argtypes = [POINTER(c_uint32)]
+GetLastActivationError.restype = c_int
 
 GetTrialActivationMetadata = library.GetTrialActivationMetadata
 GetTrialActivationMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
@@ -228,9 +363,25 @@ GetLocalTrialExpiryDate = library.GetLocalTrialExpiryDate
 GetLocalTrialExpiryDate.argtypes = [POINTER(c_uint32)]
 GetLocalTrialExpiryDate.restype = c_int
 
+GetLibraryVersion = library.GetLibraryVersion
+GetLibraryVersion.argtypes = [STRTYPE, c_uint32]
+GetLibraryVersion.restype = c_int
+
 CheckForReleaseUpdate = library.CheckForReleaseUpdate
 CheckForReleaseUpdate.argtypes = [CSTRTYPE, CSTRTYPE, CSTRTYPE, CallbackType]
 CheckForReleaseUpdate.restype = c_int
+
+CheckReleaseUpdate = library.CheckReleaseUpdateInternal
+CheckReleaseUpdate.argtypes = [ReleaseUpdateCallbackType, c_uint32, c_void_p]
+CheckReleaseUpdate.restype = c_int
+
+AuthenticateUser = library.AuthenticateUser
+AuthenticateUser.argtypes = [CSTRTYPE, CSTRTYPE]
+AuthenticateUser.restype = c_int
+
+AuthenticateUserWithIdToken = library.AuthenticateUserWithIdToken
+AuthenticateUserWithIdToken.argtypes = [CSTRTYPE]
+AuthenticateUserWithIdToken.restype = c_int
 
 ActivateLicense = library.ActivateLicense
 ActivateLicense.argtypes = []
@@ -299,6 +450,10 @@ DecrementActivationMeterAttributeUses.restype = c_int
 ResetActivationMeterAttributeUses = library.ResetActivationMeterAttributeUses
 ResetActivationMeterAttributeUses.argtypes = [CSTRTYPE]
 ResetActivationMeterAttributeUses.restype = c_int
+
+MigrateToSystemWideActivation = library.MigrateToSystemWideActivation
+MigrateToSystemWideActivation.argtypes = [c_uint32]
+MigrateToSystemWideActivation.restype = c_int
 
 Reset = library.Reset
 Reset.argtypes = []

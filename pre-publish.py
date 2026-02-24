@@ -7,7 +7,7 @@ import shutil
 import io
 
 tmp_dir = "./tmp"
-lexactivator_libs_version = 'v3.9.1'
+lexactivator_libs_version = "v3.37.0"
 
 
 class FileInfo(object):
@@ -33,8 +33,12 @@ def main():
     base_url = 'https://dl.cryptlex.com/downloads/'
     base_path = './cryptlex/lexactivator/libs'
 
-    files = [FileInfo('libs/clang/x86_64/libLexActivator.dylib',
-                      base_path + '/macos/x86_64/libLexActivator.dylib')]
+    files = [
+        FileInfo('libs/clang/x86_64/libLexActivator.dylib',
+                      base_path + '/macos/x86_64/libLexActivator.dylib'),
+        FileInfo('libs/clang/arm64/libLexActivator.dylib',
+                      base_path + '/macos/arm64/libLexActivator.dylib')
+    ]
     url = '/LexActivator-Mac.zip'
     download(base_url + lexactivator_libs_version + url, files)
 
@@ -42,7 +46,9 @@ def main():
         FileInfo('libs/vc14/x86/LexActivator.dll',
                  base_path + '/win32/x86/LexActivator.dll'),
         FileInfo('libs/vc14/x64/LexActivator.dll',
-                 base_path + '/win32/x86_64/LexActivator.dll')
+                 base_path + '/win32/x86_64/LexActivator.dll'),
+        FileInfo('libs/vc17/arm64/LexActivator.dll',
+                 base_path + '/win32/arm64/LexActivator.dll')
     ]
     url = '/LexActivator-Win.zip'
     download(base_url + lexactivator_libs_version + url, files)

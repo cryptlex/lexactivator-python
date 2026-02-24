@@ -5,8 +5,8 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="cryptlex.lexactivator",
-    version="3.9.1",
-    author="Cryptlex, LLC",
+    version="3.37.0",
+    author="Cryptlex LLP",
     author_email="support@cryptlex.com",
     description="LexActivator API wrapper for Python",
     long_description=long_description,
