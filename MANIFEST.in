@@ -3,7 +3,7 @@ include README.md
 
 # Include the license file
 include LICENSE.md
-include THIRD_PARTY_NOTICES.txt
+include THIRD-PARTY-NOTICES.txt
 
 # Include the data files
 recursive-include cryptlex/lexactivator/libs *
