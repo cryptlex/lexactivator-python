@@ -1,19 +1,23 @@
-THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
-============================================================
+lexactivator-python uses third-party libraries or other resources that may be
+distributed under licenses different than the lexactivator-python.
 
-== Apache-2.0 ==
+In the event that we accidentally failed to list a required notice, please
+bring it to our attention. Post an issue or email us:
 
-  id 1.5.0 - Copyright 2022 The Sigstore Authors.
-  packaging 25.0 - Copyright (c) Donald Stufft and individual contributors.
-  readme_renderer 44.0 - Copyright © 2014, The Python Packaging Authority.
-  requests 2.32.5 - Copyright 2019 Kenneth Reitz
-  requests-toolbelt 1.0.0 - Copyright 2014 Ian Cordasco, Cory Benfield
-  rfc3986 2.0.0 - Copyright 2014 Ian Cordasco, Rackspace
-  twine 6.2.0 - Copyright © 2019, Donald Stufft and individual contributors
+           support@cryptlex.com
 
-------------------------------------------------------------
+The attached notices are provided for information only.
 
-Apache License
+License notice for:
+id 1.5.0 - Copyright 2022 The Sigstore Authors.
+packaging 25.0 - Copyright (c) Donald Stufft and individual contributors.
+readme_renderer 44.0 - Copyright © 2014, The Python Packaging Authority.
+requests 2.32.5 - Copyright 2019 Kenneth Reitz
+requests-toolbelt 1.0.0 - Copyright 2014 Ian Cordasco, Cory Benfield
+rfc3986 2.0.0 - Copyright 2014 Ian Cordasco, Rackspace
+twine 6.2.0 - Copyright © 2019, Donald Stufft and individual contributors
+-------------------------------------------------
+                                 Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
 
@@ -215,15 +219,9 @@ Apache License
    See the License for the specific language governing permissions and
    limitations under the License.
 
-============================================================
-
-== BSD ==
-
-  Pygments 2.19.2 - Copyright (c) 2006-2022 by the respective authors (see AUTHORS file).
-
-
-------------------------------------------------------------
-
+License notice for:
+Pygments 2.19.2 - Copyright (c) 2006-2022 by the respective authors (see AUTHORS file).
+-------------------------------------------------
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
 met:
@@ -247,14 +245,9 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-============================================================
-
-== BSD License; GNU General Public License (GPL); Public Domain ==
-
-  docutils 0.22.3
-
-------------------------------------------------------------
-
+License notice for:
+docutils 0.22.3
+-------------------------------------------------
 .. include:: docs/header0.rst
 
 ==================
@@ -407,15 +400,10 @@ licenses_ directory.
 .. _license-list:
 .. _GPL-compatible: https://www.gnu.org/licenses/license-list.html
 
-============================================================
-
-== BSD-3-Clause ==
-
-  idna 3.11 - Copyright (c) 2013-2025, Kim Davies and contributors.
+License notice for:
+idna 3.11 - Copyright (c) 2013-2025, Kim Davies and contributors.
               All rights reserved.
-
-------------------------------------------------------------
-
+-------------------------------------------------
 BSD 3-Clause License
 
 Copyright <YEAR> <COPYRIGHT HOLDER>
@@ -447,25 +435,20 @@ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-============================================================
-
-== MIT ==
-
-  charset-normalizer 3.4.4 - Copyright (c) 2025 TAHRI Ahmed R.
-  jaraco.classes 3.4.0 
-  jaraco.context 6.0.1
-  jaraco.functools 4.3.0
-  keyring 25.7.0
-  markdown-it-py 4.0.0 - Copyright (c) 2020 ExecutableBookProject
-  mdurl 0.1.2 - Copyright (c) 2015 Vitaly Puzrin, Alex Kocharin.
-                Copyright (c) 2021 Taneli Hukkinen
-  more-itertools 10.8.0 - Copyright (c) 2012 Erik Rose
-  nh3 0.3.2 - Copyright (c) 2021-present Messense Lv
-  rich 14.2.0 - Copyright (c) 2020 Will McGugan
-  urllib3 2.6.2 - Copyright (c) 2008-2020 Andrey Petrov and contributors.
-
+License notice for:
+charset-normalizer 3.4.4 - Copyright (c) 2025 TAHRI Ahmed R.
+jaraco.classes 3.4.0 
+jaraco.context 6.0.1
+jaraco.functools 4.3.0
+keyring 25.7.0
+markdown-it-py 4.0.0 - Copyright (c) 2020 ExecutableBookProject
+mdurl 0.1.2 - Copyright (c) 2015 Vitaly Puzrin, Alex Kocharin.
+              Copyright (c) 2021 Taneli Hukkinen
+more-itertools 10.8.0 - Copyright (c) 2012 Erik Rose
+nh3 0.3.2 - Copyright (c) 2021-present Messense Lv
+rich 14.2.0 - Copyright (c) 2020 Will McGugan
+urllib3 2.6.2 - Copyright (c) 2008-2020 Andrey Petrov and contributors.
 ------------------------------------------------------------
-
 MIT License
 
 Copyright <YEAR> <COPYRIGHT HOLDER>
@@ -488,14 +471,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-============================================================
-
-== MPL-2.0 ==
-
-  certifi 2025.11.12
-
+License notice for:
+certifi 2025.11.12
 ------------------------------------------------------------
-
 This package contains a modified version of ca-bundle.crt:
 
 ca-bundle.crt -- Bundle of CA Root Certificates
@@ -516,5 +494,3 @@ one at http://mozilla.org/MPL/2.0/.
 
 ***** END LICENSE BLOCK *****
 @(#) $RCSfile: certdata.txt,v $ $Revision: 1.80 $ $Date: 2011/11/03 15:11:58 $
-
-============================================================
