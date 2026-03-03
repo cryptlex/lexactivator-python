@@ -646,6 +646,23 @@ class LexActivator:
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
         return LexActivatorNative.byte_to_string(buffer.value)
+
+    @staticmethod
+    def GetLicenseEntitlementSetTier():
+        """Gets the license entitlement set tier.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: tier of the license entitlement set.
+        """
+        tier = ctypes.c_int64()
+        status = LexActivatorNative.GetLicenseEntitlementSetTier(
+            ctypes.byref(tier))
+        if status != LexStatusCodes.LA_OK:
+            raise LexActivatorException(status)
+        return tier.value
     
     @staticmethod
     def GetFeatureEntitlements():

@@ -227,6 +227,10 @@ GetLicenseEntitlementSetDisplayName = library.GetLicenseEntitlementSetDisplayNam
 GetLicenseEntitlementSetDisplayName.argtypes = [STRTYPE, c_uint32]
 GetLicenseEntitlementSetDisplayName.restype = c_int
 
+GetLicenseEntitlementSetTier = library.GetLicenseEntitlementSetTier
+GetLicenseEntitlementSetTier.argtypes = [POINTER(c_int64)]
+GetLicenseEntitlementSetTier.restype = c_int
+
 GetFeatureEntitlements = library.GetFeatureEntitlementsInternal
 GetFeatureEntitlements.argtypes = [STRTYPE, c_uint32]
 GetFeatureEntitlements.restype = c_int
