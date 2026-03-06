@@ -50,6 +50,7 @@ class FeatureEntitlement(object):
         self.feature_name = feature_entitlement_dict.get("featureName")
         self.feature_display_name = feature_entitlement_dict.get("featureDisplayName")
         self.value = feature_entitlement_dict.get("value")
+        self.base_value = feature_entitlement_dict.get("baseValue")
         self.expires_at = feature_entitlement_dict.get("expiresAt")
 
 class ProductVersionFeatureFlag(object):
