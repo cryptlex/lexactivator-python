@@ -1667,6 +1667,32 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
+    def SyncLicenseActivation():
+        """Syncs the activation data with the Cryptlex server.
+
+        This function should be called only if the license is already activated.
+        This is a blocking call that performs a one-time synchronization to refresh
+        the local license data.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_FAIL
+        """
+        status = LexActivatorNative.SyncLicenseActivation()
+        if LexStatusCodes.LA_OK == status:
+            return LexStatusCodes.LA_OK
+        elif LexStatusCodes.LA_EXPIRED == status:
+            return LexStatusCodes.LA_EXPIRED
+        elif LexStatusCodes.LA_SUSPENDED == status:
+            return LexStatusCodes.LA_SUSPENDED
+        elif LexStatusCodes.LA_FAIL == status:
+            return LexStatusCodes.LA_FAIL
+        else:
+            raise LexActivatorException(status)
+
+    @staticmethod
     def ActivateTrial():
         """Starts the verified trial in your application by contacting the Cryptlex
         servers.
@@ -1747,6 +1773,30 @@ class LexActivator:
                 int: LA_OK, LA_TRIAL_EXPIRED, LA_FAIL
         """
         status = LexActivatorNative.IsTrialGenuine()
+        if LexStatusCodes.LA_OK == status:
+            return LexStatusCodes.LA_OK
+        elif LexStatusCodes.LA_TRIAL_EXPIRED == status:
+            return LexStatusCodes.LA_TRIAL_EXPIRED
+        elif LexStatusCodes.LA_FAIL == status:
+            return LexStatusCodes.LA_FAIL
+        else:
+            raise LexActivatorException(status)
+
+    @staticmethod
+    def SyncTrialActivation():
+        """Syncs the trial activation data with the Cryptlex server.
+
+        This function should be called only if the trial is already activated.
+        This is a blocking call that performs a one-time synchronization to refresh
+        the local trial data.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: LA_OK, LA_TRIAL_EXPIRED, LA_FAIL
+        """
+        status = LexActivatorNative.SyncTrialActivation()
         if LexStatusCodes.LA_OK == status:
             return LexStatusCodes.LA_OK
         elif LexStatusCodes.LA_TRIAL_EXPIRED == status:
