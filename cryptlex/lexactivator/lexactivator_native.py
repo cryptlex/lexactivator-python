@@ -415,6 +415,10 @@ IsLicenseValid = library.IsLicenseValid
 IsLicenseValid.argtypes = []
 IsLicenseValid.restype = c_int
 
+SyncLicenseActivation = library.SyncLicenseActivation
+SyncLicenseActivation.argtypes = []
+SyncLicenseActivation.restype = c_int
+
 ActivateTrial = library.ActivateTrial
 ActivateTrial.argtypes = []
 ActivateTrial.restype = c_int
@@ -430,6 +434,10 @@ GenerateOfflineTrialActivationRequest.restype = c_int
 IsTrialGenuine = library.IsTrialGenuine
 IsTrialGenuine.argtypes = []
 IsTrialGenuine.restype = c_int
+
+SyncTrialActivation = library.SyncTrialActivation
+SyncTrialActivation.argtypes = []
+SyncTrialActivation.restype = c_int
 
 ActivateLocalTrial = library.ActivateLocalTrial
 ActivateLocalTrial.argtypes = [c_uint32]

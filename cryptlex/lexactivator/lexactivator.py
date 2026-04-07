@@ -1667,6 +1667,40 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
+    def SyncLicenseActivation():
+        """Synchronizes the activation data with the Cryptlex servers.
+
+        The license must already be activated when this function is called.
+
+        This is a blocking call that performs a one-time synchronization to refresh the local
+        license data.
+
+        In most cases, rely on IsLicenseGenuine(), which automatically handles periodic
+        background synchronization based on the configured interval.
+
+        Note:
+                Do not use this function in regular application flow. Use it only when an
+                immediate synchronization is required.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_FAIL
+        """
+        status = LexActivatorNative.SyncLicenseActivation()
+        if LexStatusCodes.LA_OK == status:
+            return LexStatusCodes.LA_OK
+        elif LexStatusCodes.LA_EXPIRED == status:
+            return LexStatusCodes.LA_EXPIRED
+        elif LexStatusCodes.LA_SUSPENDED == status:
+            return LexStatusCodes.LA_SUSPENDED
+        elif LexStatusCodes.LA_FAIL == status:
+            return LexStatusCodes.LA_FAIL
+        else:
+            raise LexActivatorException(status)
+
+    @staticmethod
     def ActivateTrial():
         """Starts the verified trial in your application by contacting the Cryptlex
         servers.
@@ -1681,6 +1715,38 @@ class LexActivator:
                 int: LA_OK, LA_TRIAL_EXPIRED
         """
         status = LexActivatorNative.ActivateTrial()
+        if LexStatusCodes.LA_OK == status:
+            return LexStatusCodes.LA_OK
+        elif LexStatusCodes.LA_TRIAL_EXPIRED == status:
+            return LexStatusCodes.LA_TRIAL_EXPIRED
+        elif LexStatusCodes.LA_FAIL == status:
+            return LexStatusCodes.LA_FAIL
+        else:
+            raise LexActivatorException(status)
+
+    @staticmethod
+    def SyncTrialActivation():
+        """Synchronizes the trial activation data with the Cryptlex servers.
+
+        The trial must already be activated when this function is called.
+
+        This is a blocking call that performs a one-time synchronization to refresh the local
+        trial data.
+
+        Unlike IsTrialGenuine(), which validates the trial activation data locally, this
+        function performs an immediate synchronization with the servers.
+
+        Note:
+                Use this function to immediately reflect server-side changes on the user's
+                machine, such as trial extensions.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: LA_OK, LA_TRIAL_EXPIRED, LA_FAIL
+        """
+        status = LexActivatorNative.SyncTrialActivation()
         if LexStatusCodes.LA_OK == status:
             return LexStatusCodes.LA_OK
         elif LexStatusCodes.LA_TRIAL_EXPIRED == status:
