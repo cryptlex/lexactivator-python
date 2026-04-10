@@ -50,6 +50,7 @@ class FeatureEntitlement(object):
         self.feature_name = feature_entitlement_dict.get("featureName")
         self.feature_display_name = feature_entitlement_dict.get("featureDisplayName")
         self.value = feature_entitlement_dict.get("value")
+        self.base_value = feature_entitlement_dict.get("baseValue")
         self.expires_at = feature_entitlement_dict.get("expiresAt")
 
 class ProductVersionFeatureFlag(object):
@@ -646,6 +647,23 @@ class LexActivator:
         if status != LexStatusCodes.LA_OK:
             raise LexActivatorException(status)
         return LexActivatorNative.byte_to_string(buffer.value)
+
+    @staticmethod
+    def GetLicenseEntitlementSetTier():
+        """Gets the license entitlement set tier.
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: tier of the license entitlement set.
+        """
+        tier = ctypes.c_int64()
+        status = LexActivatorNative.GetLicenseEntitlementSetTier(
+            ctypes.byref(tier))
+        if status != LexStatusCodes.LA_OK:
+            raise LexActivatorException(status)
+        return tier.value
     
     @staticmethod
     def GetFeatureEntitlements():
@@ -1441,19 +1459,18 @@ class LexActivator:
             raise LexActivatorException(status)
         
     @staticmethod
-    def AuthenticateUserWithIdToken(idToken):
+    def AuthenticateUserWithIdToken(id_token):
         """Authenticates the user via OIDC Id token.
 
         Args:
-                idToken (str): The id token obtained from the OIDC provider.
-
+                id_token (str): The id token obtained from the OIDC provider.
         Raises:
                 LexActivatorException
 
         Returns:
                 int: LA_OK
         """
-        cstring_id_token = LexActivatorNative.get_ctype_string(idToken)
+        cstring_id_token = LexActivatorNative.get_ctype_string(id_token)
         status = LexActivatorNative.AuthenticateUserWithIdToken(cstring_id_token)
         if LexStatusCodes.LA_OK == status:
             return LexStatusCodes.LA_OK
@@ -1740,14 +1757,14 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
-    def ActivateLocalTrial(trialLength):
+    def ActivateLocalTrial(trial_length):
         """Starts the local (unverified) trial.
 
         This function should be executed when your application starts first time on
         the user's computer, ideally on a button click.
 
         Args:
-                trialLength (int): trial length in days
+                trial_length (int): trial length in days
 
         Raises:
                 LexActivatorException
@@ -1755,7 +1772,7 @@ class LexActivator:
         Returns:
                 int: LA_OK, LA_LOCAL_TRIAL_EXPIRED, LA_FAIL
         """
-        status = LexActivatorNative.ActivateLocalTrial(trialLength)
+        status = LexActivatorNative.ActivateLocalTrial(trial_length)
         if LexStatusCodes.LA_OK == status:
             return LexStatusCodes.LA_OK
         elif LexStatusCodes.LA_TRIAL_EXPIRED == status:
@@ -1789,13 +1806,13 @@ class LexActivator:
             raise LexActivatorException(status)
 
     @staticmethod
-    def ExtendLocalTrial(trialExtensionLength):
+    def ExtendLocalTrial(trial_extension_length):
         """Extends the local trial.
 
         This function is only meant for unverified trials.
 
         Args:
-                trialExtensionLength (int): number of days to extend the trial
+                trial_extension_length (int): number of days to extend the trial
 
         Raises:
                 LexActivatorException
@@ -1803,7 +1820,7 @@ class LexActivator:
         Returns:
                 int: LA_OK, LA_FAIL
         """
-        status = LexActivatorNative.ExtendLocalTrial(trialExtensionLength)
+        status = LexActivatorNative.ExtendLocalTrial(trial_extension_length)
         if LexStatusCodes.LA_OK == status:
             return LexStatusCodes.LA_OK
         elif LexStatusCodes.LA_FAIL == status:
@@ -1859,6 +1876,35 @@ class LexActivator:
         status = LexActivatorNative.ResetActivationMeterAttributeUses(
             cstring_name)
         if LexStatusCodes.LA_OK != status:
+            raise LexActivatorException(status)
+
+    @staticmethod
+    def MigrateToSystemWideActivation(old_permission_flag):
+        """Migrates existing license data to system-wide storage.
+
+        Call this function after SetProductData().
+
+        If you intend to use a custom data directory after migration,
+        set it first using SetDataDirectory().
+
+        Note:
+                The function does not support migration from custom data directories.
+
+        Args:
+                old_permission_flag (int): permission flag used previously
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                int: LA_OK, LA_FAIL
+        """
+        status = LexActivatorNative.MigrateToSystemWideActivation(old_permission_flag)
+        if LexStatusCodes.LA_OK == status:
+            return LexStatusCodes.LA_OK
+        elif LexStatusCodes.LA_FAIL == status:
+            return LexStatusCodes.LA_FAIL
+        else:
             raise LexActivatorException(status)
 
     @staticmethod

@@ -227,6 +227,10 @@ GetLicenseEntitlementSetDisplayName = library.GetLicenseEntitlementSetDisplayNam
 GetLicenseEntitlementSetDisplayName.argtypes = [STRTYPE, c_uint32]
 GetLicenseEntitlementSetDisplayName.restype = c_int
 
+GetLicenseEntitlementSetTier = library.GetLicenseEntitlementSetTier
+GetLicenseEntitlementSetTier.argtypes = [POINTER(c_int64)]
+GetLicenseEntitlementSetTier.restype = c_int
+
 GetFeatureEntitlements = library.GetFeatureEntitlementsInternal
 GetFeatureEntitlements.argtypes = [STRTYPE, c_uint32]
 GetFeatureEntitlements.restype = c_int
@@ -450,6 +454,10 @@ DecrementActivationMeterAttributeUses.restype = c_int
 ResetActivationMeterAttributeUses = library.ResetActivationMeterAttributeUses
 ResetActivationMeterAttributeUses.argtypes = [CSTRTYPE]
 ResetActivationMeterAttributeUses.restype = c_int
+
+MigrateToSystemWideActivation = library.MigrateToSystemWideActivation
+MigrateToSystemWideActivation.argtypes = [c_uint32]
+MigrateToSystemWideActivation.restype = c_int
 
 Reset = library.Reset
 Reset.argtypes = []
